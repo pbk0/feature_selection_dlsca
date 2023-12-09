@@ -20,5 +20,6 @@ source ${VA_TOOLS_USER_DIR}/.pyenv/versions/fsd/bin/activate
 dnd
 git clone https://github.com/pbk0/feature_selection_dlsca
 cd feature_selection_dlsca/
-
+pip install --upgrade pip --trusted-host pypi.org
+pip install -r requirements.txt --trusted-host pypi.org
 ```
