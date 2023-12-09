@@ -3,6 +3,7 @@ import tensorflow as tf
 tf.config.threading.set_intra_op_parallelism_threads(2)
 tf.config.threading.set_inter_op_parallelism_threads(1)
 
+import pathlib
 import os
 import sys
 import time
@@ -10,7 +11,7 @@ import glob
 import numpy as np
 
 # put root project folder path here:
-sys.path.append('/project_root_folder')
+sys.path.append(pathlib.Path(__file__).parent.parent.parent.resolve().as_posix())
 
 os.environ["OMP_NUM_THREADS"] = '2'  # export OMP_NUM_THREADS=4
 os.environ["OPENBLAS_NUM_THREADS"] = '2'  # export OPENBLAS_NUM_THREADS=4
