@@ -9,7 +9,9 @@ import time
 import glob
 import numpy as np
 
-sys.path.append('/project_root_folder')
+# sys.path.append('/project_root_folder')
+import pathlib
+sys.path.append(pathlib.Path(__file__).parent.parent.parent.resolve().as_posix())
 
 os.environ["OMP_NUM_THREADS"] = '2'  # export OMP_NUM_THREADS=4
 os.environ["OPENBLAS_NUM_THREADS"] = '2'  # export OPENBLAS_NUM_THREADS=4

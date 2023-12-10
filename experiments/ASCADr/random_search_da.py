@@ -13,7 +13,9 @@ import time
 import glob
 import sys
 
-sys.path.append('/project_root_folder')
+# sys.path.append('/project_root_folder')
+import pathlib
+sys.path.append(pathlib.Path(__file__).parent.parent.parent.resolve().as_posix())
 
 from src.random_models.random_mlp import *
 from src.random_models.random_cnn import *

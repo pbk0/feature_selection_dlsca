@@ -12,7 +12,9 @@ os.environ["MKL_NUM_THREADS"] = '2'  # export MKL_NUM_THREADS=6
 import sys
 import time
 import glob
-sys.path.append('/project_root_folder')
+# sys.path.append('/project_root_folder')
+import pathlib
+sys.path.append(pathlib.Path(__file__).parent.parent.parent.resolve().as_posix())
 
 from src.random_models.random_mlp import mlp_random
 from src.random_models.random_cnn import cnn_random

@@ -6,7 +6,9 @@ import random
 import sys
 from experiments.paths import *
 
-sys.path.append('/project_root_folder')
+# sys.path.append('/project_root_folder')
+import pathlib
+sys.path.append(pathlib.Path(__file__).parent.parent.parent.resolve().as_posix())
 
 """ 
 This file generates CHES CTF dataset for the experiments in the paper 
