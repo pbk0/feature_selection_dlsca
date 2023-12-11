@@ -4,11 +4,11 @@ import trsfile
 from numba import njit
 import random
 import sys
-from experiments.paths import *
 
 # sys.path.append('/project_root_folder')
 import pathlib
 sys.path.append(pathlib.Path(__file__).parent.parent.parent.resolve().as_posix())
+from experiments.paths import *
 
 """ 
 This file generates CHES CTF dataset for the experiments in the paper 
@@ -273,9 +273,9 @@ def generate_nopoi_desync(window):
 
 
 if __name__ == "__main__":
-    generate_nopoi(10)
-    generate_nopoi(20)
-    generate_nopoi(40)
-    generate_nopoi(80)
+    # generate_nopoi(10)
+    # generate_nopoi(20)
+    # generate_nopoi(40)
+    # generate_nopoi(80)
     generate_opoi()
-    generate_nopoi_desync(40)
+    # generate_nopoi_desync(40)
