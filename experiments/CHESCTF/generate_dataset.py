@@ -273,9 +273,9 @@ def generate_nopoi_desync(window):
 
 
 if __name__ == "__main__":
-    generate_nopoi(10)
+    # generate_nopoi(10)
     generate_nopoi(20)
-    generate_nopoi(40)
-    generate_nopoi(80)
+    # generate_nopoi(40)
+    # generate_nopoi(80)
     generate_opoi()
-    generate_nopoi_desync(40)
+    # generate_nopoi_desync(40)

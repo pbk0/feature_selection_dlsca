@@ -6,7 +6,7 @@
 raw_trace_folder_ascadf = "D:/traces"
 raw_trace_folder_ascadr = "D:/traces"
 raw_trace_folder_dpav42 = "D:/traces"
-raw_trace_folder_chesctf = "D:/traces"
+raw_trace_folder_chesctf = "C:/traces"
 
 # Folder location for each dataset and feature selection scenario
 dataset_folder_ascadf_rpoi = "/datasets/ASCADf/ASCAD_rpoi"
@@ -24,8 +24,8 @@ dataset_folder_dpav42_opoi = "/datasets/DPAV42/dpav42_opoi"
 dataset_folder_dpav42_nopoi = "/datasets/DPAV42/dpav42_nopoi"
 dataset_folder_dpav42_nopoi_desync = "/datasets/DPAV42/dpav42_nopoi_desync"
 
-dataset_folder_chesctf_opoi = "/datasets/CHESCTF/ches_ctf_opoi"
-dataset_folder_chesctf_nopoi = "/datasets/CHESCTF/ches_ctf_nopoi"
+dataset_folder_chesctf_opoi = "C:/datasets/CHESCTF/ches_ctf_opoi"
+dataset_folder_chesctf_nopoi = "C:/datasets/CHESCTF/ches_ctf_nopoi"
 dataset_folder_chesctf_nopoi_desync = "/datasets/CHESCTF/ches_ctf_nopoi_desync"
 
 # Folder location to save results from grid and random search
