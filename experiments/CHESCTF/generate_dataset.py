@@ -102,8 +102,8 @@ def generate_opoi():
     n_profiling = 30000
     n_attack = 10000
 
-    profiling_samples_opoi = np.zeros((len(profiling_samples), 4000))
-    attack_samples_opoi = np.zeros((len(attack_samples), 4000))
+    profiling_samples_opoi = np.zeros((len(profiling_samples), 4000), dtype=np.float16)
+    attack_samples_opoi = np.zeros((len(attack_samples), 4000), dtype=np.float16)
 
     for i in range(len(profiling_samples)):
         profiling_samples_opoi[i][:1000] = profiling_samples[i][:1000]

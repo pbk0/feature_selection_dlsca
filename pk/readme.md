@@ -62,14 +62,11 @@ copy D:\dnd\Download\sca.reassure_masked_aes\DnB\file PinataAcqTask2.2_10k_uploa
 copy D:\dnd\Download\sca.reassure_masked_aes\DnC_vk\file PinataAcqTask2.3_10k_upload.trs
 copy D:\dnd\Download\sca.reassure_masked_aes\DnC_fk\file PinataAcqTask2.4_10k_upload.trs
 
+mkdir C:/datasets/CHESCTF/ches_ctf_nopoi
+mkdir C:/datasets/CHESCTF/ches_ctf_opoi
 python C:\Github\RU\feature_selection_dlsca\experiments\CHESCTF\generate_dataset.py
 
-
-
-
-copy E:scandal\\dnd\Download\sca.ascad_v1\DnVk_000\file ascad-variable.h5
-mkdir C:\datasets\ASCADr\ascad-variable_opoi
-copy ascad-variable.h5 C:\datasets\ASCADr\ascad-variable_opoi
+rm -r -fo C:/datasets/CHESCTF/ches_ctf_nopoi
 ```
 
 
