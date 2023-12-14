@@ -70,37 +70,28 @@ rm -r -fo C:/datasets/CHESCTF/ches_ctf_nopoi
 ```
 
 
-### DPAV42
+### ~~DPAV42~~
+
+We ignore this dataset as it is not clear how to generate it.
+
+Also the attack dataset is created of last two sets which has different keys while first 14 groups are used to generate profiling traces. This makes the attack dataset to not be fixed ...
+
+Apart from that the results on this dataset for OPOI are already close to 1 and make it difficult to compare models ...
+
+Also we do not have acces to chunked *.h5 files taht are used by `merge_dataset()` method provided in script `experiments\DPAV42\generate_dataset.py`
 
 ```pwsh
-cd C:\traces
-curl https://zenodo.org/record/3733418/files/PinataAcqTask2.1_10k_upload.trs --output PinataAcqTask2.1_10k_upload.trs
-curl https://zenodo.org/record/3733418/files/PinataAcqTask2.2_10k_upload.trs --output PinataAcqTask2.2_10k_upload.trs
-curl https://zenodo.org/record/3733418/files/PinataAcqTask2.3_10k_upload.trs --output PinataAcqTask2.3_10k_upload.trs
-curl https://zenodo.org/record/3733418/files/PinataAcqTask2.4_10k_upload.trs --output PinataAcqTask2.4_10k_upload.trs
-
-copy D:\dnd\Download\sca.reassure_masked_aes\DnA\file PinataAcqTask2.1_10k_upload.trs
-copy D:\dnd\Download\sca.reassure_masked_aes\DnB\file PinataAcqTask2.2_10k_upload.trs
-copy D:\dnd\Download\sca.reassure_masked_aes\DnC_vk\file PinataAcqTask2.3_10k_upload.trs
-copy D:\dnd\Download\sca.reassure_masked_aes\DnC_fk\file PinataAcqTask2.4_10k_upload.trs
-
-mkdir C:/datasets/CHESCTF/ches_ctf_nopoi
-mkdir C:/datasets/CHESCTF/ches_ctf_opoi
-python C:\Github\RU\feature_selection_dlsca\experiments\CHESCTF\generate_dataset.py
-
-rm -r -fo C:/datasets/CHESCTF/ches_ctf_nopoi
+#cd C:\traces
+## download all the files from here https://cloud.telecom-paris.fr/s/JM2iaRZfwrNKtSp
+#for ($i = 0; $i -lt 16; $i++)
+#{
+#    $ix = $i.ToString('D2')
+#    "D:\dnd\Download\sca.dpa_v42\Dn\k${ix}p1 DPA_contestv4_2_k${ix}_part1.zip"
+#    copy "D:\dnd\Download\sca.dpa_v42\Dn\k${ix}p1" "DPA_contestv4_2_k${ix}_part1.zip"
+#    "D:\dnd\Download\sca.dpa_v42\Dn\k${ix}p2 DPA_contestv4_2_k${ix}_part2.zip"
+#    copy "D:\dnd\Download\sca.dpa_v42\Dn\k${ix}p2" "DPA_contestv4_2_k${ix}_part2.zip"
+#}
 ```
-
-
-
-```pwsh
-mkdir C:\traces; mkdir C:\datasets
-```
-
-+ ASCADf: no need 
-+ ASCADr: no need
-+ CHESCTF: 
-  + `python experiments/CHESCTF/generate_dataset.py`
 
 
 
