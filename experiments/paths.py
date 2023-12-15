@@ -5,7 +5,7 @@
 # For CHESCTF dataset: ... (source: https://zenodo.org/record/3733418#.Yc2iq1ko9Pa)
 raw_trace_folder_ascadf = "D:/traces"
 raw_trace_folder_ascadr = "D:/traces"
-raw_trace_folder_dpav42 = "D:/traces"
+raw_trace_folder_dpav42 = "C:/traces"
 raw_trace_folder_chesctf = "C:/traces"
 
 # Folder location for each dataset and feature selection scenario
@@ -20,8 +20,8 @@ dataset_folder_ascadr_nopoi = "/datasets/ASCADr/ascad-variable_nopoi"
 dataset_folder_ascadr_nopoi_desync = "/datasets/ASCADr/ascad-variable_nopoi_desync"
 
 dataset_folder_dpav42_rpoi = "/datasets/DPAV42/dpav42_rpoi"
-dataset_folder_dpav42_opoi = "/datasets/DPAV42/dpav42_opoi"
-dataset_folder_dpav42_nopoi = "/datasets/DPAV42/dpav42_nopoi"
+dataset_folder_dpav42_opoi = "C:/datasets/DPAV42/dpav42_opoi"
+dataset_folder_dpav42_nopoi = "C:/datasets/DPAV42/dpav42_nopoi"
 dataset_folder_dpav42_nopoi_desync = "/datasets/DPAV42/dpav42_nopoi_desync"
 
 dataset_folder_chesctf_opoi = "C:/datasets/CHESCTF/ches_ctf_opoi"

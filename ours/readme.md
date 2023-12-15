@@ -81,16 +81,21 @@ Apart from that the results on this dataset for OPOI are already close to 1 and 
 Also we do not have acces to chunked *.h5 files taht are used by `merge_dataset()` method provided in script `experiments\DPAV42\generate_dataset.py`
 
 ```pwsh
-#cd C:\traces
-## download all the files from here https://cloud.telecom-paris.fr/s/JM2iaRZfwrNKtSp
-#for ($i = 0; $i -lt 16; $i++)
-#{
-#    $ix = $i.ToString('D2')
-#    "D:\dnd\Download\sca.dpa_v42\Dn\k${ix}p1 DPA_contestv4_2_k${ix}_part1.zip"
-#    copy "D:\dnd\Download\sca.dpa_v42\Dn\k${ix}p1" "DPA_contestv4_2_k${ix}_part1.zip"
-#    "D:\dnd\Download\sca.dpa_v42\Dn\k${ix}p2 DPA_contestv4_2_k${ix}_part2.zip"
-#    copy "D:\dnd\Download\sca.dpa_v42\Dn\k${ix}p2" "DPA_contestv4_2_k${ix}_part2.zip"
-#}
+cd C:\traces
+# download all the files from here https://cloud.telecom-paris.fr/s/JM2iaRZfwrNKtSp
+for ($i = 0; $i -lt 16; $i++)
+{
+    $ix = $i.ToString('D2')
+    "D:\dnd\Download\sca.dpa_v42\Dn\k${ix}p1 DPA_contestv4_2_k${ix}_part1.zip"
+    copy "D:\dnd\Download\sca.dpa_v42\Dn\k${ix}p1" "DPA_contestv4_2_k${ix}_part1.zip"
+    "D:\dnd\Download\sca.dpa_v42\Dn\k${ix}p2 DPA_contestv4_2_k${ix}_part2.zip"
+    copy "D:\dnd\Download\sca.dpa_v42\Dn\k${ix}p2" "DPA_contestv4_2_k${ix}_part2.zip"
+}
+copy "D:\dnd\Download\sca.dpa_v42\Dn\index" "dpav4_2_index"
+
+mkdir C:/datasets/DPAV42/dpav42_nopoi
+mkdir C:/datasets/DPAV42/dpav42_opoi
+python C:\Github\RU\feature_selection_dlsca\experiments\DPAV42\generate_dataset.py
 ```
 
 

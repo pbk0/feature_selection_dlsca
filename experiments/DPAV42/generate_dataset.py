@@ -5,6 +5,9 @@ from numba import njit
 from tqdm import tqdm
 import random
 import sys
+import zipfile
+import bz2
+import io
 
 # sys.path.append('/project_root_folder')
 import pathlib
@@ -295,6 +298,188 @@ def generate_nopoi(window, desync=False):
 
     out_file.flush()
     out_file.close()
+    
+    
+def our_make_dataset():
+    """
+    NOte that we are using n_attack=5000 instead of 10000 as then the attack
+    dataset will not be fixed key dataset. The original authors of this fork
+    have ignored this. To match number of traces we will continue using
+    n_profiling=70000
+    
+    Also note that the authors of this fork have used 300000 samples but they
+    mention that they used 400000 traces. So we slice the samples between
+    100000:300000
+    """
+    _MASK_ARRAY = np.asarray(
+        [[
+            0x03, 0x0c, 0x35, 0x3a,
+            0x50, 0x5f, 0x66, 0x69,
+            0x96, 0x99, 0xa0, 0xaf,
+            0xc5, 0xca, 0xf3, 0xfc
+        ]],
+        dtype=np.uint8
+    )
+    n_profiling = 70000
+    n_traces_per_set = 5000
+    n_attack = n_traces_per_set
+    n_samples = 300000
+    
+    _trace_arr = np.zeros(
+        shape=(n_traces_per_set*15, n_samples), dtype=np.int8
+    )
+    _key_arr = np.zeros(
+        shape=(n_traces_per_set*15, 16),
+        dtype=np.uint8
+    )
+    _ptx_arr = np.zeros(
+        shape=(n_traces_per_set*15, 16),
+        dtype=np.uint8
+    )
+    _ctx_arr = np.zeros(
+        shape=(n_traces_per_set*15, 16),
+        dtype=np.uint8
+    )
+    _mask_arr = np.zeros(
+        shape=(n_traces_per_set*15, 16),
+        dtype=np.uint8
+    )
+    
+    for _set_id in range(15):
+        _slice = slice(_set_id*n_traces_per_set, (_set_id+1)*n_traces_per_set, 1)
+        # loop over all lines in the file
+        _start_at = _set_id * n_traces_per_set
+        _end_at = _start_at + n_traces_per_set
+        for i, line in enumerate(pathlib.Path(f"{raw_trace_folder_dpav42}/dpav4_2_index").open()):
+            # scan part of file
+            if i < _start_at:
+                continue
+            if i == _end_at:
+                break
+            
+            # modify i
+            i_new = i % n_traces_per_set
+            
+            # extract
+            [
+                _key, _ptx, _ctx, _shuffle0, _shuffle10, _offsets, _folder,
+                _file_name
+            ] = line.split(" ")
+            assert _folder == f"k{_set_id:02d}", "should not happen"
+            
+            # transform _shuffle0, _shuffle10 and _offsets str to add
+            # extra 0 so that we can create uint8 from a char
+            _shuffle0 = "".join([f"0{_}" for _ in _shuffle0])
+            _shuffle10 = "".join([f"0{_}" for _ in _shuffle10])
+            _offsets = "".join([f"0{_}" for _ in _offsets])
+            
+            # create arrays
+            _key_arr[_slice][i_new, :] = np.asarray(
+                bytearray.fromhex(_key),
+                dtype=np.uint8
+            )
+            _ptx_arr[_slice][i_new, :] = np.asarray(
+                bytearray.fromhex(_ptx),
+                dtype=np.uint8
+            )
+            _ctx_arr[_slice][i_new, :] = np.asarray(
+                bytearray.fromhex(_ctx),
+                dtype=np.uint8
+            )
+            # _shuffle0 = np.asarray(
+            #     bytearray.fromhex(_shuffle0),
+            #     dtype=np.uint8
+            # )
+            # _shuffle10 = np.asarray(
+            #     bytearray.fromhex(_shuffle10),
+            #     dtype=np.uint8
+            # )
+            _offsets = np.asarray(
+                bytearray.fromhex(_offsets),
+                dtype=np.uint8
+            )
+            _mask_arr[_slice][i_new, :] = _MASK_ARRAY[0, (_offsets + 1).astype(np.int32) % 16]
+        # track traces seen
+        _num_traces_seen = 0
+        # the new dataset has now split files in two parts
+        for _zip_part in [1, 2]:
+            _zip_file = zipfile.ZipFile(f"{raw_trace_folder_dpav42}/DPA_contestv4_2_k{_set_id:02d}_part{_zip_part}.zip")
+            
+            # loop over items in zipfile (note we skip first element
+            # which represents dir)
+            _zip_infos = _zip_file.infolist()
+            for _zip_info in _zip_infos:
+                # track
+                _num_traces_seen += 1
+                # estimate trace id
+                _tid = int(_zip_info.filename[-14:-8])
+                _tid %= n_traces_per_set
+                
+                # extract zip file and then read in memory file oject
+                # which is bz2 so again extract it
+                _byte_data = bz2.BZ2File(
+                    io.BytesIO(
+                        _zip_file.read(
+                            _zip_info
+                        )
+                    )
+                ).read()[357:-1]
+                _npy_data = np.frombuffer(_byte_data, dtype=np.int8)
+                _trace_arr[_slice][_tid, :] = _npy_data[0:300000]
+                print(_set_id, _zip_part, _num_traces_seen, "...........")
+        
+        # simple assert check
+        assert _num_traces_seen == n_traces_per_set, \
+            f"should match {_num_traces_seen} != {n_traces_per_set}"
+    
+    _profiling_index = [n for n in range(n_profiling)]
+    _attack_index = [n for n in range(n_attack)]
+    
+    _out_file = h5py.File(f'{dataset_folder_dpav42_nopoi}/dpa_v42_full.h5', 'w')
+    
+    _profiling_traces_group = _out_file.create_group("Profiling_traces")
+    _attack_traces_group = _out_file.create_group("Attack_traces")
+    
+    _profiling_traces_group.create_dataset(name="traces", data=_trace_arr[:n_profiling],
+                                          dtype=_trace_arr.dtype)
+    _attack_traces_group.create_dataset(name="traces", data=_trace_arr[n_profiling:],
+                                       dtype=_trace_arr.dtype)
+    
+    _metadata_type_profiling = np.dtype([(
+                                        "plaintext", _ptx_arr.dtype,
+                                        (n_profiling,)),
+                                        ("ciphertext",
+                                         _ctx_arr.dtype,
+                                         (n_profiling,)),
+                                        ("key", _key_arr.dtype,
+                                         (n_profiling,)),
+                                        ("masks", _mask_arr.dtype,
+                                         (n_profiling,))])
+    _metadata_type_attack = np.dtype(
+        [("plaintext", _ptx_arr.dtype, (n_attack,)),
+         (
+         "ciphertext", _ctx_arr.dtype, (n_attack,)),
+         ("key", _key_arr.dtype, (n_attack,)),
+         ("masks", _mask_arr.dtype, (n_attack,))])
+    
+    _profiling_metadata = np.array([(_ptx_arr[:n_profiling][n],
+                                    _ctx_arr[:n_profiling][n], _key_arr[:n_profiling][n],
+                                    _mask_arr[:n_profiling][n]) for n, k in
+                                   zip(_profiling_index, range(n_profiling))],
+                                  dtype=_metadata_type_profiling)
+    _profiling_traces_group.create_dataset("metadata", data=_profiling_metadata,
+                                          dtype=_metadata_type_profiling)
+    
+    _attack_metadata = np.array([(_ptx_arr[n_profiling:][n], _ctx_arr[n_profiling:][n],
+                                 _key_arr[n_profiling:][n], _mask_arr[n_profiling:][n]) for n, k in
+                                zip(_attack_index, range(n_attack))],
+                               dtype=_metadata_type_attack)
+    _attack_traces_group.create_dataset("metadata", data=_attack_metadata,
+                                       dtype=_metadata_type_attack)
+    
+    _out_file.flush()
+    _out_file.close()
+        
 
 
 def merge_dataset():
@@ -368,17 +553,18 @@ def merge_dataset():
 
 
 if __name__ == "__main__":
-    merge_dataset()
-    generate_nopoi(10)
+    our_make_dataset()
+    # merge_dataset()
+    # generate_nopoi(10)
     generate_nopoi(20)
-    generate_nopoi(40)
-    generate_nopoi(80)
-    generate_nopoi(10, desync=True)
-    generate_nopoi(20, desync=True)
-    generate_nopoi(40, desync=True)
-    generate_nopoi(80, desync=True)
+    # generate_nopoi(40)
+    # generate_nopoi(80)
+    # generate_nopoi(10, desync=True)
+    # generate_nopoi(20, desync=True)
+    # generate_nopoi(40, desync=True)
+    # generate_nopoi(80, desync=True)
     generate_opoi()
 
-    generate_rpoi()
-    generate_rpoi(gaussian_noise=3)
-    generate_rpoi(gaussian_noise=10)
+    # generate_rpoi()
+    # generate_rpoi(gaussian_noise=3)
+    # generate_rpoi(gaussian_noise=10)
