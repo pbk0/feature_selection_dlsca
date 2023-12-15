@@ -1,6 +1,7 @@
 import numpy as np
 import bz2
 import h5py
+import sys
 
 AES_Sbox = np.array([
     0x63, 0x7C, 0x77, 0x7B, 0xF2, 0x6B, 0x6F, 0xC5, 0x30, 0x01, 0x67, 0x2B, 0xFE, 0xD7, 0xAB, 0x76,
@@ -22,8 +23,8 @@ AES_Sbox = np.array([
 ])
 
 # max_range = 1704046
-trace_folder = "/dpav42/"
-filepath_data = f"{trace_folder}dpav4_2_index.txt"
+trace_folder = sys.argv[1]
+filepath_data = f"{trace_folder}dpav4_2_index"
 
 file_data = open(filepath_data, "r")
 file_lines = file_data.readlines()
@@ -41,14 +42,14 @@ for s_i in range(0, 4):
 
     out_file = h5py.File(f'{trace_folder}dpa_v42_{fs}_{fs + ns}.h5', 'w')
 
-    mask_share_r = np.zeros((4, nt))
-    mask_share_sm = np.zeros((4, nt))
+    mask_share_r = np.zeros((4, nt), dtype=np.uint8)
+    mask_share_sm = np.zeros((4, nt), dtype=np.uint8)
 
-    samples = np.zeros((nt, ns))
-    plaintexts = np.zeros((nt, 16))
-    ciphertexts = np.zeros((nt, 16))
-    masks = np.zeros((nt, 16))
-    keys = np.zeros((nt, 16))
+    samples = np.zeros((nt, ns), dtype=np.int8)
+    plaintexts = np.zeros((nt, 16), dtype=np.uint8)
+    ciphertexts = np.zeros((nt, 16), dtype=np.uint8)
+    masks = np.zeros((nt, 16), dtype=np.uint8)
+    keys = np.zeros((nt, 16), dtype=np.uint8)
 
     for file_index in range(16):
 
