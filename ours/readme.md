@@ -72,21 +72,19 @@ rm -r -fo C:/datasets/CHESCTF/ches_ctf_nopoi
 
 ### ASCADV2
 
+We use the traces from [here](https://zenodo.org/record/7885814). 
+Provided by authors of paper "A Comparison of Multi-task learning and Single-task learning Approaches"
+https://eprint.iacr.org/2023/611
+
 ```pwsh
 cd C:\traces
-curl https://zenodo.org/record/3733418/files/PinataAcqTask2.1_10k_upload.trs --output PinataAcqTask2.1_10k_upload.trs
-curl https://zenodo.org/record/3733418/files/PinataAcqTask2.2_10k_upload.trs --output PinataAcqTask2.2_10k_upload.trs
-curl https://zenodo.org/record/3733418/files/PinataAcqTask2.3_10k_upload.trs --output PinataAcqTask2.3_10k_upload.trs
-curl https://zenodo.org/record/3733418/files/PinataAcqTask2.4_10k_upload.trs --output PinataAcqTask2.4_10k_upload.trs
 
-copy D:\dnd\Download\sca.reassure_masked_aes\DnA\file PinataAcqTask2.1_10k_upload.trs
-copy D:\dnd\Download\sca.reassure_masked_aes\DnB\file PinataAcqTask2.2_10k_upload.trs
-copy D:\dnd\Download\sca.reassure_masked_aes\DnC_vk\file PinataAcqTask2.3_10k_upload.trs
-copy D:\dnd\Download\sca.reassure_masked_aes\DnC_fk\file PinataAcqTask2.4_10k_upload.trs
+curl https://zenodo.org/record/7885814/files/Ascad_v2_dataset_extracted.h5 --output Ascad_v2_dataset_extracted.h5
 
-mkdir C:/datasets/CHESCTF/ches_ctf_nopoi
-mkdir C:/datasets/CHESCTF/ches_ctf_opoi
-python C:\Github\RU\feature_selection_dlsca\experiments\CHESCTF\generate_dataset.py
+copy D:\dnd\Download\sca.ascad_v2_mo\Dn\file Ascad_v2_dataset_extracted.h5
+
+mkdir C:/datasets/ASCADV2/ascad_v2_opoi
+python C:\Github\RU\feature_selection_dlsca\experiments\ASCADV2\generate_dataset.py
 
 rm -r -fo C:/datasets/CHESCTF/ches_ctf_nopoi
 ```
