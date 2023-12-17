@@ -83,7 +83,7 @@ curl https://zenodo.org/record/7885814/files/Ascad_v2_dataset_extracted.h5 --out
 
 copy D:\dnd\Download\sca.ascad_v2_mo\Dn\file Ascad_v2_dataset_extracted.h5
 
-mkdir C:/datasets/ASCADV2/ascad_v2_opoi
+mkdir C:/datasets/ASCADV2/ascadv2_opoi
 python C:\Github\RU\feature_selection_dlsca\experiments\ASCADV2\generate_dataset.py
 
 rm -r -fo C:/datasets/CHESCTF/ches_ctf_nopoi
