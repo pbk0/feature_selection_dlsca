@@ -93,6 +93,14 @@ def generate_opoi():
         [in_file["training/masks"][()], in_file["validation/masks"][()]]
     )
     attack_masks = in_file["attack/masks"][()]
+    
+    # hack to make attack set fixed key
+    new_attack_keys = np.zeros(shape=attack_keys.shape, dtype=attack_keys.dtype)
+    np.random.seed(367123)
+    new_attack_keys[:] = np.random.randint(0, 256, 16, dtype=np.uint8)
+    np.random.seed(None)
+    attack_plaintexts = attack_plaintexts ^ (new_attack_keys ^ attack_keys)
+    attack_keys = new_attack_keys
 
     out_file = h5py.File(f'{dataset_folder_ascadv2_opoi}/ascad_v2_opoi.h5', 'w')
 
@@ -129,11 +137,4 @@ def generate_opoi():
 
 if __name__ == "__main__":
     
-    tokens = 10
-    new_key = np.zeros(tokens, dtype=np.uint8)
-    key = np.random.randint(0, 256, tokens, dtype=np.uint8)
-    ptx = np.random.randint(0, 256, tokens, dtype=np.uint8)
-    sbo = AES_Sbox[ptx^key]
-    new_ptx = new_key ^ key
-    new_sbo =
     generate_opoi()
