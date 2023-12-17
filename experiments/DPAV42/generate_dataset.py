@@ -302,10 +302,10 @@ def generate_nopoi(window, desync=False):
     
 def our_make_dataset():
     """
-    NOte that we are using n_attack=5000 instead of 10000 as then the attack
-    dataset will not be fixed key dataset. The original authors of this fork
-    have ignored this. To match number of traces we will continue using
-    n_profiling=70000
+    NOte that we are using n_attack=10000 as then the attack dataset will not
+    be fixed key dataset. But that is okay as the original authors of this
+    fork have used one set for validation and other for attack.
+    To match number of traces we will continue using n_profiling=70000
     
     Also note that the authors of this fork have used 300000 samples but they
     mention that they used 400000 traces. So we slice the samples between
@@ -322,30 +322,30 @@ def our_make_dataset():
     )
     n_profiling = 70000
     n_traces_per_set = 5000
-    n_attack = n_traces_per_set
+    n_attack = n_traces_per_set * 2
     n_samples = 300000
     
     _trace_arr = np.zeros(
-        shape=(n_traces_per_set*15, n_samples), dtype=np.int8
+        shape=(n_traces_per_set*16, n_samples), dtype=np.int8
     )
     _key_arr = np.zeros(
-        shape=(n_traces_per_set*15, 16),
+        shape=(n_traces_per_set*16, 16),
         dtype=np.uint8
     )
     _ptx_arr = np.zeros(
-        shape=(n_traces_per_set*15, 16),
+        shape=(n_traces_per_set*16, 16),
         dtype=np.uint8
     )
     _ctx_arr = np.zeros(
-        shape=(n_traces_per_set*15, 16),
+        shape=(n_traces_per_set*16, 16),
         dtype=np.uint8
     )
     _mask_arr = np.zeros(
-        shape=(n_traces_per_set*15, 16),
+        shape=(n_traces_per_set*16, 16),
         dtype=np.uint8
     )
     
-    for _set_id in range(15):
+    for _set_id in range(16):
         _slice = slice(_set_id*n_traces_per_set, (_set_id+1)*n_traces_per_set, 1)
         # loop over all lines in the file
         _start_at = _set_id * n_traces_per_set
