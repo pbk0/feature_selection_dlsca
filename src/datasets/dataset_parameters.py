@@ -14,6 +14,14 @@ ascadr = {
     "n_validation_ge": 3000
 }
 
+ascadv2 = {
+    "n_profiling": 250000,
+    "n_attack": 25000,
+    "n_validation": 25000,
+    "n_attack_ge": 3000,
+    "n_validation_ge": 3000
+}
+
 chesctf = {
     "n_profiling": 30000,
     "n_attack": 5000,
