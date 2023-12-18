@@ -1,9 +1,13 @@
 import random
 
 
-def get_hyperparameters_mlp(regularization=False, max_dense_layers=8):
+def get_hyperparameters_mlp(regularization=False, max_dense_layers=8, search_id: int = None):
+    if search_id is None:
+        raise Exception("Please supply search id to create random hp that is deterministic based on search id")
+    # this heps generate determinist random hp
+    random.seed(17263+search_id)
     if regularization:
-        return {
+        _ret = {
             "batch_size": random.randrange(100, 1100, 100),
             "layers": random.randrange(1, max_dense_layers + 1, 1),
             "neurons": random.choice([10, 20, 50, 100, 200, 300, 400, 500]),
@@ -17,7 +21,7 @@ def get_hyperparameters_mlp(regularization=False, max_dense_layers=8):
             "dropout": random.choice([0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5])
         }
     else:
-        return {
+        _ret = {
             "batch_size": random.randrange(100, 1100, 100),
             "layers": random.choice([1, 2, 3, 4]),
             "neurons": random.choice([10, 20, 50, 100, 200, 300, 400, 500]),
@@ -27,13 +31,24 @@ def get_hyperparameters_mlp(regularization=False, max_dense_layers=8):
             "kernel_initializer": random.choice(["random_uniform", "glorot_uniform", "he_uniform"]),
             "regularization": random.choice(["none"])
         }
+    # resets seed
+    random.seed(None)
+    return _ret
 
 
-def get_hyperparemeters_cnn(regularization=False):
+def get_hyperparemeters_cnn(regularization=False, search_id: int = None):
+    
+    if search_id is None:
+        raise Exception(
+            "Please supply search id to create random hp that is deterministic based on search id")
+    
     hyperparameters = {}
     hyperparameters_mlp = get_hyperparameters_mlp(regularization=regularization, max_dense_layers=4)
     for key, value in hyperparameters_mlp.items():
         hyperparameters[key] = value
+        
+    # this heps generate determinist random hp
+    random.seed(423234 + search_id)
 
     conv_layers = random.choice([1, 2, 3, 4])
     kernels = []
@@ -64,5 +79,8 @@ def get_hyperparemeters_cnn(regularization=False):
     hyperparameters["pooling_sizes"] = pooling_sizes
     hyperparameters["pooling_strides"] = pooling_strides
     hyperparameters["pooling_types"] = pooling_types
+    
+    # resets seed
+    random.seed(None)
 
     return hyperparameters
