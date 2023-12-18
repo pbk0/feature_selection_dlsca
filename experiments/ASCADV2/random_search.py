@@ -19,7 +19,7 @@ sys.path.append(pathlib.Path(__file__).parent.parent.parent.resolve().as_posix()
 
 from src.random_models.random_mlp import *
 from src.random_models.random_cnn import *
-from src.datasets.ReadASCADr import ReadASCADr
+from src.datasets.ReadASCADv2 import ReadASCADv2
 from src.datasets.dataset_parameters import *
 from src.sca_metrics.sca_metrics import sca_metrics
 from experiments.paths import *
@@ -27,10 +27,7 @@ from experiments.paths import *
 
 def dataset_name(fs_type, num_poi, resampling_window=20):
     dataset_name = {
-        "RPOI": f"ascad-variable_{num_poi}poi.h5",
-        "OPOI": "ascad-variable.h5",
-        "NOPOI": f"ascad-variable_nopoi_window_{resampling_window}.h5",
-        "NOPOI_DESYNC": f"ascad-variable_nopoi_window_{resampling_window}_desync.h5"
+        "OPOI": "ascad_v2_opoi.h5",
     }
 
     return dataset_name[fs_type]
@@ -42,13 +39,13 @@ if __name__ == "__main__":
     model_name = sys.argv[2]
     feature_selection_type = sys.argv[3]
     npoi = int(sys.argv[4])
-    search_id = int(sys.argv[5])
-    regularization = True if sys.argv[6] == "True" else False
-    window = int(sys.argv[7])
+    regularization = True if sys.argv[5] == "True" else False
+    window = int(sys.argv[6])
+    search_id = int(sys.argv[7])
 
     if feature_selection_type == "OPOI":
-        dataset_folder = dataset_folder_ascadr_opoi
-        save_folder = results_folder_ascadr_opoi
+        dataset_folder = dataset_folder_ascadv2_opoi
+        save_folder = results_folder_ascadv2_opoi
     else:
         dataset_folder = None
         save_folder = None
@@ -60,7 +57,7 @@ if __name__ == "__main__":
     """ Parameters for the analysis """
     classes = 9 if leakage_model == "HW" else 256
     first_sample = 0
-    target_byte = 2
+    target_byte = 0
     epochs = 100
     ascadv2_parameters = ascadv2
     n_profiling = ascadv2_parameters["n_profiling"]
@@ -70,7 +67,7 @@ if __name__ == "__main__":
     n_validation_ge = ascadv2_parameters["n_validation_ge"]
 
     """ Create dataset for ASCADr """
-    ascad_dataset = ReadASCADr(
+    ascad_dataset = ReadASCADv2(
         n_profiling,
         n_attack,
         n_validation,

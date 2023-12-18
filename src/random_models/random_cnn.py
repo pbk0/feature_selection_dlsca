@@ -16,8 +16,8 @@ def get_reg(hp):
         return hp["dropout"]
 
 
-def cnn_random(classes, number_of_samples, regularization=False):
-    hp = get_hyperparemeters_cnn(regularization=regularization)
+def cnn_random(classes, number_of_samples, regularization=False, search_id: int = None):
+    hp = get_hyperparemeters_cnn(regularization=regularization, search_id=search_id)
 
     tf_random_seed = np.random.randint(1048576)
     tf.random.set_seed(tf_random_seed)

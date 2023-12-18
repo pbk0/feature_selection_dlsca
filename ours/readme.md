@@ -1,6 +1,6 @@
 
 
-# clone fork
+# Clone the fork
 
 ```bash
 # dnd
@@ -8,7 +8,7 @@ git clone https://github.com/pbk0/feature_selection_dlsca
 cd feature_selection_dlsca/
 ```
 
-# generate dataset
+# Generate dataset
 
 We are only interested in OPOI
 
@@ -117,7 +117,7 @@ python C:\Github\RU\feature_selection_dlsca\experiments\DPAV42\generate_dataset.
 
 
 
-# Calling models
+# Calling best models
 
 ## ASCADf
 
@@ -144,4 +144,16 @@ python experiments/CHESCTF/test_best_models.py HW mlp OPOI 4000 2 0
 python experiments/CHESCTF/test_best_models.py ID mlp OPOI 4000 2 0
 python experiments/CHESCTF/test_best_models.py HW cnn OPOI 4000 2 0
 python experiments/CHESCTF/test_best_models.py ID cnn OPOI 4000 2 0
+```
+
+
+
+# Search best model for ASCADv2
+
+```bash
+mkdir C:/results/ASCADV2/ascadv2_opoi
+python experiments/ASCADV2/random_search.py HW mlp OPOI 7181 True 0 0
+python experiments/ASCADV2/random_search.py ID mlp OPOI 7181 True 0 0
+python experiments/ASCADV2/random_search.py HW cnn OPOI 7181 True 0 0
+python experiments/ASCADV2/random_search.py ID cnn OPOI 7181 True 0 0
 ```

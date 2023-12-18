@@ -47,6 +47,8 @@ results_folder_dpav42_opoi = "/results/DPAV42/dpav42_opoi"
 results_folder_dpav42_nopoi = "/results/DPAV42/dpav42_nopoi"
 results_folder_dpav42_nopoi_desync = "/results/DPAV42/dpav42_nopoi_desync"
 
+results_folder_ascadv2_opoi = "C:/results/ASCADV2/ascadv2_opoi"
+
 results_folder_chesctf_opoi = "/results/CHESCTF/chesctf_opoi"
 results_folder_chesctf_nopoi = "/results/CHESCTF/chesctf_nopoi"
 results_folder_chesctf_nopoi_desync = "/results/CHESCTF/chesctf_nopoi_desync"

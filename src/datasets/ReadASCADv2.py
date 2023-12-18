@@ -22,7 +22,7 @@ aes_sbox = np.array([
 ])
 
 
-class ReadASCADr:
+class ReadASCADv2:
 
     def __init__(self, n_profiling, n_validation, n_attack, target_byte, leakage_model, file_path, first_sample=0, number_of_samples=7181,
                  reshape_to_cnn=False):
