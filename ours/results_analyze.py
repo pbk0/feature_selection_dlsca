@@ -8,8 +8,8 @@ def print_best_hp(_path: str):
     for _npz in pathlib.Path(_path).glob("*"):
         if _npz.name.endswith(".log"):
             continue
-        _data = np.load(_npz)
-        print(_data)
+        _data = np.load(_npz)["npz_dict"]
+        print(_data["hp"])
     
 
 
