@@ -116,11 +116,11 @@ We call the best models 100 times to get statistic for number of traces needed f
 ### ASCADf
 
 ```bash
+mkdir -p _results/ASCADf/opoi/orig/test_best_models/
+mkdir -p _results/ASCADr/opoi/orig/test_best_models/
+mkdir -p _results/CHESCTF/opoi/orig/test_best_models/
 for n in {1..2}; 
 do
-  mkdir -p _results/ASCADf/opoi/test_best_models/
-  mkdir -p _results/ASCADr/opoi/test_best_models/
-  mkdir -p _results/CHESCTF/opoi/test_best_models/
   for lk in ID HW;
   do 
     for nn in mlp cnn;
