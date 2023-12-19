@@ -118,15 +118,16 @@ We call the best models 100 times to get statistic for number of traces needed f
 ```bash
 for n in {1..2}; 
 do
-  for ds in ASCADf ASCADr CHESCTF;
+  mkdir -p _results/ASCADf/opoi/test_best_models/
+  mkdir -p _results/ASCADr/opoi/test_best_models/
+  mkdir -p _results/CHESCTF/opoi/test_best_models/
+  for lk in ID HW;
   do 
-    mkdir -p _results/${ds}/opoi/test_best_models/
-    for lk in ID HW;
-    do 
-      for nn in mlp cnn;
-      do
-        bsub -oo "_results/${ds}/opoi/orig/test_best_models/${nn}_${lk}_700_${n}.log" python experiments/${ds}/test_best_models.py ${lk} ${nn} OPOI 700 0 ${n}
-      done
+    for nn in mlp cnn;
+    do
+      bsub -oo "_results/ASCADf/opoi/orig/test_best_models/${nn}_${lk}_700_${n}.log" python experiments/ASCADf/test_best_models.py ${lk} ${nn} OPOI 700 0 ${n}
+      bsub -oo "_results/ASCADr/opoi/orig/test_best_models/${nn}_${lk}_700_${n}.log" python experiments/ASCADr/test_best_models.py ${lk} ${nn} OPOI 1400 0 ${n}
+      bsub -oo "_results/CHESCTF/opoi/orig/test_best_models/${nn}_${lk}_700_${n}.log" python experiments/CHESCTF/test_best_models.py ${lk} ${nn} OPOI 4000 0 ${n}
     done
   done
 done
