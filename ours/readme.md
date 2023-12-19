@@ -122,6 +122,7 @@ python experiments\DPAV42\generate_dataset.py
 ## ASCADf
 
 ```bash
+set TF_ENABLE_ONEDNN_OPTS=0
 python experiments/ASCADf/test_best_models.py HW mlp OPOI 700 2 0
 python experiments/ASCADf/test_best_models.py ID mlp OPOI 700 2 0
 python experiments/ASCADf/test_best_models.py HW cnn OPOI 700 2 0
