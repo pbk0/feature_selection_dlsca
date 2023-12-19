@@ -84,7 +84,7 @@ curl https://zenodo.org/record/7885814/files/Ascad_v2_dataset_extracted.h5 --out
 copy D:\dnd\Download\sca.ascad_v2_mo\Dn\file _traces\Ascad_v2_dataset_extracted.h5
 
 mkdir _datasets\ASCADV2\ascadv2_opoi
-python C:\Github\RU\feature_selection_dlsca\experiments\ASCADV2\generate_dataset.py
+python experiments\ASCADV2\generate_dataset.py
 ```
 
 ### ~~DPAV42~~
@@ -103,16 +103,16 @@ cd _traces
 for ($i = 0; $i -lt 16; $i++)
 {
     $ix = $i.ToString('D2')
-    "D:\dnd\Download\sca.dpa_v42\Dn\k${ix}p1 DPA_contestv4_2_k${ix}_part1.zip"
-    copy "D:\dnd\Download\sca.dpa_v42\Dn\k${ix}p1" "DPA_contestv4_2_k${ix}_part1.zip"
-    "D:\dnd\Download\sca.dpa_v42\Dn\k${ix}p2 DPA_contestv4_2_k${ix}_part2.zip"
-    copy "D:\dnd\Download\sca.dpa_v42\Dn\k${ix}p2" "DPA_contestv4_2_k${ix}_part2.zip"
+    "D:\dnd\Download\sca.dpa_v42\Dn\k${ix}p1 _traces\DPA_contestv4_2_k${ix}_part1.zip"
+    copy "D:\dnd\Download\sca.dpa_v42\Dn\k${ix}p1" "_traces\DPA_contestv4_2_k${ix}_part1.zip"
+    "D:\dnd\Download\sca.dpa_v42\Dn\k${ix}p2 _traces\DPA_contestv4_2_k${ix}_part2.zip"
+    copy "D:\dnd\Download\sca.dpa_v42\Dn\k${ix}p2" "_traces\DPA_contestv4_2_k${ix}_part2.zip"
 }
-copy "D:\dnd\Download\sca.dpa_v42\Dn\index" "dpav4_2_index"
+copy "D:\dnd\Download\sca.dpa_v42\Dn\index" "_traces\dpav4_2_index"
 
-mkdir C:/datasets/DPAV42/dpav42_nopoi
-mkdir C:/datasets/DPAV42/dpav42_opoi
-python C:\Github\RU\feature_selection_dlsca\experiments\DPAV42\generate_dataset.py
+mkdir _datasets/DPAV42/dpav42_nopoi
+mkdir _datasets/DPAV42/dpav42_opoi
+python experiments\DPAV42\generate_dataset.py
 ```
 
 
@@ -151,7 +151,7 @@ python experiments/CHESCTF/test_best_models.py ID cnn OPOI 4000 2 0
 # Search best model for ASCADv2
 
 ```bash
-mkdir C:/results/ASCADV2/ascadv2_opoi
+mkdir _results/ASCADV2/ascadv2_opoi
 python experiments/ASCADV2/random_search.py HW mlp OPOI 7181 True 0 0
 python experiments/ASCADV2/random_search.py ID mlp OPOI 7181 True 0 0
 python experiments/ASCADV2/random_search.py HW cnn OPOI 7181 True 0 0
