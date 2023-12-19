@@ -165,9 +165,9 @@ do
   do 
     for nn in mlp cnn;
     do
-      bsub -oo "_results/ASCADV2/opoi/random_search/${nn}_${lk}_7181_${n}.log" python experiments/ASCADV2/random_search.py ${lk} ${nn} OPOI 7181 True 0 ${n}
+      bsub -oo "_results/ASCADV2/opoi/orig/random_search/${nn}_${lk}_7181_${n}.log" python experiments/ASCADV2/random_search.py ${lk} ${nn} OPOI 7181 True 0 ${n}
     done
   done
 done
-python ours/results_analyze.py "_results/ASCADV2/opoi/random_search"
+python ours/results_analyze.py "_results/ASCADV2/opoi/orig/random_search"
 ```
