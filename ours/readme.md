@@ -20,47 +20,48 @@ Note to install `pip install trsfile==0.3.2`
 First lets make two dirs
 
 ```pwsh
-mkdir C:\traces
-mkdir C:\datasets
+cd feature_selection_dlsca
+mkdir _traces
+mkdir _datasets
+mkdir _results
 ```
 
 ### ASCADf
 
 ```pwsh
-cd C:\traces
-curl https://www.data.gouv.fr/s/resources/ascad/20180530-163000/ASCAD_data.zip --output ASCAD_data.zip
-copy D:\dnd\Download\sca.ascad_v1_full\DnFk\file ASCAD_data.zip
-Expand-Archive -Path ASCAD_data.zip -DestinationPath .
-copy C:\traces\ASCAD_data\ASCAD_databases\ASCAD.h5 C:\datasets\ASCADf\ASCAD_opoi
-rm -r -fo ASCAD_data
+curl https://www.data.gouv.fr/s/resources/ascad/20180530-163000/ASCAD_data.zip --output _traces\ASCAD_data.zip
+copy D:\dnd\Download\sca.ascad_v1_full\DnFk\file _traces\ASCAD_data.zip
+Expand-Archive -Path _traces\ASCAD_data.zip -DestinationPath _traces
+copy _traces\ASCAD_data\ASCAD_databases\ASCAD.h5 _datasets\ASCADf\ASCAD_opoi
+rm -r -fo _traces\ASCAD_data
 ```
 
 
 ### ASCADr
 
 ```pwsh
-cd C:\traces
-curl https://static.data.gouv.fr/resources/ascad-atmega-8515-variable-key/20190903-083349/ascad-variable.h5 --output ascad-variable.h5
-copy D:\dnd\Download\sca.ascad_v1\DnVk_000\file ascad-variable.h5
-copy E:scandal\\dnd\Download\sca.ascad_v1\DnVk_000\file ascad-variable.h5
-mkdir C:\datasets\ASCADr\ascad-variable_opoi
-copy ascad-variable.h5 C:\datasets\ASCADr\ascad-variable_opoi
+cd _traces
+curl https://static.data.gouv.fr/resources/ascad-atmega-8515-variable-key/20190903-083349/ascad-variable.h5 --output _traces\ascad-variable.h5
+copy D:\dnd\Download\sca.ascad_v1\DnVk_000\file _traces\ascad-variable.h5
+copy E:scandal\\dnd\Download\sca.ascad_v1\DnVk_000\file _traces\ascad-variable.h5
+mkdir _datasets\ASCADr\ascad-variable_opoi
+copy ascad-variable.h5 _datasets\ASCADr\ascad-variable_opoi
 ```
 
 
 ### CHESCTF
 
 ```pwsh
-cd C:\traces
-curl https://zenodo.org/record/3733418/files/PinataAcqTask2.1_10k_upload.trs --output PinataAcqTask2.1_10k_upload.trs
-curl https://zenodo.org/record/3733418/files/PinataAcqTask2.2_10k_upload.trs --output PinataAcqTask2.2_10k_upload.trs
-curl https://zenodo.org/record/3733418/files/PinataAcqTask2.3_10k_upload.trs --output PinataAcqTask2.3_10k_upload.trs
-curl https://zenodo.org/record/3733418/files/PinataAcqTask2.4_10k_upload.trs --output PinataAcqTask2.4_10k_upload.trs
+cd _traces
+curl https://zenodo.org/record/3733418/files/PinataAcqTask2.1_10k_upload.trs --output _traces\PinataAcqTask2.1_10k_upload.trs
+curl https://zenodo.org/record/3733418/files/PinataAcqTask2.2_10k_upload.trs --output _traces\PinataAcqTask2.2_10k_upload.trs
+curl https://zenodo.org/record/3733418/files/PinataAcqTask2.3_10k_upload.trs --output _traces\PinataAcqTask2.3_10k_upload.trs
+curl https://zenodo.org/record/3733418/files/PinataAcqTask2.4_10k_upload.trs --output _traces\PinataAcqTask2.4_10k_upload.trs
 
-copy D:\dnd\Download\sca.reassure_masked_aes\DnA\file PinataAcqTask2.1_10k_upload.trs
-copy D:\dnd\Download\sca.reassure_masked_aes\DnB\file PinataAcqTask2.2_10k_upload.trs
-copy D:\dnd\Download\sca.reassure_masked_aes\DnC_vk\file PinataAcqTask2.3_10k_upload.trs
-copy D:\dnd\Download\sca.reassure_masked_aes\DnC_fk\file PinataAcqTask2.4_10k_upload.trs
+copy D:\dnd\Download\sca.reassure_masked_aes\DnA\file _traces\PinataAcqTask2.1_10k_upload.trs
+copy D:\dnd\Download\sca.reassure_masked_aes\DnB\file _traces\PinataAcqTask2.2_10k_upload.trs
+copy D:\dnd\Download\sca.reassure_masked_aes\DnC_vk\file _traces\PinataAcqTask2.3_10k_upload.trs
+copy D:\dnd\Download\sca.reassure_masked_aes\DnC_fk\file _traces\PinataAcqTask2.4_10k_upload.trs
 
 mkdir C:/datasets/CHESCTF/ches_ctf_nopoi
 mkdir C:/datasets/CHESCTF/ches_ctf_opoi
@@ -77,13 +78,13 @@ Provided by authors of paper "A Comparison of Multi-task learning and Single-tas
 https://eprint.iacr.org/2023/611
 
 ```pwsh
-cd C:\traces
+cd _traces
 
-curl https://zenodo.org/record/7885814/files/Ascad_v2_dataset_extracted.h5 --output Ascad_v2_dataset_extracted.h5
+curl https://zenodo.org/record/7885814/files/Ascad_v2_dataset_extracted.h5 --output _traces\Ascad_v2_dataset_extracted.h5
 
-copy D:\dnd\Download\sca.ascad_v2_mo\Dn\file Ascad_v2_dataset_extracted.h5
+copy D:\dnd\Download\sca.ascad_v2_mo\Dn\file _traces\Ascad_v2_dataset_extracted.h5
 
-mkdir C:/datasets/ASCADV2/ascadv2_opoi
+mkdir _datasets\ASCADV2\ascadv2_opoi
 python C:\Github\RU\feature_selection_dlsca\experiments\ASCADV2\generate_dataset.py
 ```
 
@@ -98,7 +99,7 @@ Apart from that the results on this dataset for OPOI are already close to 1 and 
 Also we do not have acces to chunked *.h5 files taht are used by `merge_dataset()` method provided in script `experiments\DPAV42\generate_dataset.py`
 
 ```pwsh
-cd C:\traces
+cd _traces
 # download all the files from here https://cloud.telecom-paris.fr/s/JM2iaRZfwrNKtSp
 for ($i = 0; $i -lt 16; $i++)
 {

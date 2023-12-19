@@ -15,3 +15,6 @@ run_dpav42_best_models.sbatch
 run_chesctf_nopoi.sbatch
 run_chesctf_nopoi_da.sbatch
 run_chesctf_best_models.sbatch
+/_datasets/
+/_results/
+/_traces/
