@@ -32,6 +32,7 @@ mkdir _results
 curl https://www.data.gouv.fr/s/resources/ascad/20180530-163000/ASCAD_data.zip --output _traces\ASCAD_data.zip
 copy D:\dnd\Download\sca.ascad_v1_full\DnFk\file _traces\ASCAD_data.zip
 Expand-Archive -Path _traces\ASCAD_data.zip -DestinationPath _traces
+mkdir _datasets\ASCADf\ASCAD_opoi
 copy _traces\ASCAD_data\ASCAD_databases\ASCAD.h5 _datasets\ASCADf\ASCAD_opoi
 rm -r -fo _traces\ASCAD_data
 ```
@@ -40,12 +41,10 @@ rm -r -fo _traces\ASCAD_data
 ### ASCADr
 
 ```pwsh
-cd _traces
 curl https://static.data.gouv.fr/resources/ascad-atmega-8515-variable-key/20190903-083349/ascad-variable.h5 --output _traces\ascad-variable.h5
 copy D:\dnd\Download\sca.ascad_v1\DnVk_000\file _traces\ascad-variable.h5
-copy E:scandal\\dnd\Download\sca.ascad_v1\DnVk_000\file _traces\ascad-variable.h5
 mkdir _datasets\ASCADr\ascad-variable_opoi
-copy ascad-variable.h5 _datasets\ASCADr\ascad-variable_opoi
+copy _traces\ascad-variable.h5 _datasets\ASCADr\ascad-variable_opoi
 ```
 
 
@@ -58,16 +57,16 @@ curl https://zenodo.org/record/3733418/files/PinataAcqTask2.2_10k_upload.trs --o
 curl https://zenodo.org/record/3733418/files/PinataAcqTask2.3_10k_upload.trs --output _traces\PinataAcqTask2.3_10k_upload.trs
 curl https://zenodo.org/record/3733418/files/PinataAcqTask2.4_10k_upload.trs --output _traces\PinataAcqTask2.4_10k_upload.trs
 
-copy D:\dnd\Download\sca.reassure_masked_aes\DnA\file _traces\PinataAcqTask2.1_10k_upload.trs
-copy D:\dnd\Download\sca.reassure_masked_aes\DnB\file _traces\PinataAcqTask2.2_10k_upload.trs
-copy D:\dnd\Download\sca.reassure_masked_aes\DnC_vk\file _traces\PinataAcqTask2.3_10k_upload.trs
-copy D:\dnd\Download\sca.reassure_masked_aes\DnC_fk\file _traces\PinataAcqTask2.4_10k_upload.trs
+copy E:\scandal\dnd\Download\sca.reassure_masked_aes\DnA\file _traces\PinataAcqTask2.1_10k_upload.trs
+copy E:\scandal\dnd\Download\sca.reassure_masked_aes\DnB\file _traces\PinataAcqTask2.2_10k_upload.trs
+copy E:\scandal\dnd\Download\sca.reassure_masked_aes\DnC_vk\file _traces\PinataAcqTask2.3_10k_upload.trs
+copy E:\scandal\dnd\Download\sca.reassure_masked_aes\DnC_fk\file _traces\PinataAcqTask2.4_10k_upload.trs
 
-mkdir C:/datasets/CHESCTF/ches_ctf_nopoi
-mkdir C:/datasets/CHESCTF/ches_ctf_opoi
-python C:\Github\RU\feature_selection_dlsca\experiments\CHESCTF\generate_dataset.py
+mkdir _datasets/CHESCTF/ches_ctf_nopoi
+mkdir _datasets/CHESCTF/ches_ctf_opoi
+python experiments\CHESCTF\generate_dataset.py
 
-rm -r -fo C:/datasets/CHESCTF/ches_ctf_nopoi
+rm -r -fo _datasets/CHESCTF/ches_ctf_nopoi
 ```
 
 

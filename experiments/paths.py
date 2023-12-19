@@ -5,9 +5,9 @@
 # For CHESCTF dataset: ... (source: https://zenodo.org/record/3733418#.Yc2iq1ko9Pa)
 raw_trace_folder_ascadf = "D:/traces"
 raw_trace_folder_ascadr = "D:/traces"
-raw_trace_folder_dpav42 = "C:/traces"
-raw_trace_folder_ascadv2 = "C:/traces"
-raw_trace_folder_chesctf = "C:/traces"
+raw_trace_folder_dpav42 = "_traces"
+raw_trace_folder_ascadv2 = "_traces"
+raw_trace_folder_chesctf = "_traces"
 
 # Folder location for each dataset and feature selection scenario
 dataset_folder_ascadf_rpoi = "/datasets/ASCADf/ASCAD_rpoi"
@@ -21,14 +21,14 @@ dataset_folder_ascadr_nopoi = "/datasets/ASCADr/ascad-variable_nopoi"
 dataset_folder_ascadr_nopoi_desync = "/datasets/ASCADr/ascad-variable_nopoi_desync"
 
 dataset_folder_dpav42_rpoi = "/datasets/DPAV42/dpav42_rpoi"
-dataset_folder_dpav42_opoi = "C:/datasets/DPAV42/dpav42_opoi"
-dataset_folder_dpav42_nopoi = "C:/datasets/DPAV42/dpav42_nopoi"
+dataset_folder_dpav42_opoi = "_datasets/DPAV42/dpav42_opoi"
+dataset_folder_dpav42_nopoi = "_datasets/DPAV42/dpav42_nopoi"
 dataset_folder_dpav42_nopoi_desync = "/datasets/DPAV42/dpav42_nopoi_desync"
 
-dataset_folder_ascadv2_opoi = "C:/datasets/ASCADV2/ascadv2_opoi"
+dataset_folder_ascadv2_opoi = "_datasets/ASCADV2/ascadv2_opoi"
 
-dataset_folder_chesctf_opoi = "C:/datasets/CHESCTF/ches_ctf_opoi"
-dataset_folder_chesctf_nopoi = "C:/datasets/CHESCTF/ches_ctf_nopoi"
+dataset_folder_chesctf_opoi = "_datasets/CHESCTF/ches_ctf_opoi"
+dataset_folder_chesctf_nopoi = "_datasets/CHESCTF/ches_ctf_nopoi"
 dataset_folder_chesctf_nopoi_desync = "/datasets/CHESCTF/ches_ctf_nopoi_desync"
 
 # Folder location to save results from grid and random search
@@ -47,7 +47,7 @@ results_folder_dpav42_opoi = "/results/DPAV42/dpav42_opoi"
 results_folder_dpav42_nopoi = "/results/DPAV42/dpav42_nopoi"
 results_folder_dpav42_nopoi_desync = "/results/DPAV42/dpav42_nopoi_desync"
 
-results_folder_ascadv2_opoi = "C:/results/ASCADV2/ascadv2_opoi"
+results_folder_ascadv2_opoi = "_results/ASCADV2/ascadv2_opoi"
 
 results_folder_chesctf_opoi = "/results/CHESCTF/chesctf_opoi"
 results_folder_chesctf_nopoi = "/results/CHESCTF/chesctf_nopoi"
