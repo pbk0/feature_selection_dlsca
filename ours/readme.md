@@ -14,9 +14,6 @@ We are only interested in OPOI
 
 Note to install `pip install trsfile==0.3.2`
 
-
-## First lets make the datasets
-
 First lets make two dirs
 
 ```pwsh
@@ -26,7 +23,7 @@ mkdir _datasets
 mkdir _results
 ```
 
-### ASCADf
+## ASCADf
 
 ```pwsh
 curl https://www.data.gouv.fr/s/resources/ascad/20180530-163000/ASCAD_data.zip --output _traces\ASCAD_data.zip
@@ -38,7 +35,7 @@ rm -r -fo _traces\ASCAD_data
 ```
 
 
-### ASCADr
+## ASCADr
 
 ```pwsh
 curl https://static.data.gouv.fr/resources/ascad-atmega-8515-variable-key/20190903-083349/ascad-variable.h5 --output _traces\ascad-variable.h5
@@ -48,7 +45,7 @@ copy _traces\ascad-variable.h5 _datasets\ASCADr\ascad-variable_opoi
 ```
 
 
-### CHESCTF
+## CHESCTF
 
 ```pwsh
 cd _traces
@@ -70,7 +67,7 @@ rm -r -fo _datasets/CHESCTF/ches_ctf_nopoi
 ```
 
 
-### ASCADV2
+## ASCADV2
 
 We use the traces from [here](https://zenodo.org/record/7885814). 
 Provided by authors of paper "A Comparison of Multi-task learning and Single-task learning Approaches"
@@ -87,7 +84,7 @@ mkdir _datasets\ASCADV2\ascadv2_opoi
 python experiments\ASCADV2\generate_dataset.py
 ```
 
-### ~~DPAV42~~
+## ~~DPAV42~~
 
 We do not include this dataset for our experiments as the dataset is comparatively easy similar to full version datatsets where all samples are used ...
 
