@@ -10,4 +10,4 @@ def print_best_hp(_path: str):
 
 
 if __name__ == "__main__":
-    print_best_hp(_path=sys.argv[0])
+    print_best_hp(_path=sys.argv[1])
