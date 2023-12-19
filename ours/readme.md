@@ -152,7 +152,7 @@ python experiments/CHESCTF/test_best_models.py ID cnn OPOI 4000 2 0
 
 ```bash
 mkdir -p _results/ASCADV2/ascadv2_opoi
-for n in {1..2}; 
+for n in {1..500}; 
 do
   for lk in ID HW;
   do 
