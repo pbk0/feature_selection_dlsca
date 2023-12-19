@@ -39,9 +39,9 @@ if __name__ == "__main__":
     model_name = sys.argv[2]
     feature_selection_type = sys.argv[3]
     npoi = int(sys.argv[4])
-    number_of_searches = int(sys.argv[5])
-    regularization = True if sys.argv[6] == "True" else False
-    window = int(sys.argv[7])
+    regularization = True if sys.argv[5] == "True" else False
+    window = int(sys.argv[6])
+    search_id = int(sys.argv[7])
 
     if feature_selection_type == "RPOI":
         dataset_folder = dataset_folder_dpav42_rpoi
@@ -89,64 +89,58 @@ if __name__ == "__main__":
     )
 
     """ Start search """
-    for search_id in range(number_of_searches):
-        start_time = time.time()
+    start_time = time.time()
 
-        """ Create random model """
-        if model_name == "mlp":
-            model, seed, hp = mlp_random(classes, npoi, regularization=regularization)
-        else:
-            model, seed, hp = cnn_random(classes, npoi, regularization=regularization)
+    """ Create random model """
+    if model_name == "mlp":
+        model, seed, hp = mlp_random(classes, npoi, regularization=regularization)
+    else:
+        model, seed, hp = cnn_random(classes, npoi, regularization=regularization)
 
-        hp["epochs"] = epochs
+    hp["epochs"] = epochs
 
-        """ Train model """
-        history = model.fit(
-            x=dpav42_dataset.x_profiling,
-            y=dpav42_dataset.y_profiling,
-            batch_size=hp["batch_size"],
-            verbose=2,
-            epochs=hp["epochs"],
-            shuffle=True,
-            validation_data=(dpav42_dataset.x_validation, dpav42_dataset.y_validation),
-            callbacks=[])
+    """ Train model """
+    history = model.fit(
+        x=dpav42_dataset.x_profiling,
+        y=dpav42_dataset.y_profiling,
+        batch_size=hp["batch_size"],
+        verbose=2,
+        epochs=hp["epochs"],
+        shuffle=True,
+        validation_data=(dpav42_dataset.x_validation, dpav42_dataset.y_validation),
+        callbacks=[])
 
-        """ Get DL metrics """
-        accuracy = history.history["accuracy"]
-        val_accuracy = history.history["val_accuracy"]
-        loss = history.history["loss"]
-        val_loss = history.history["val_loss"]
+    """ Get DL metrics """
+    accuracy = history.history["accuracy"]
+    val_accuracy = history.history["val_accuracy"]
+    loss = history.history["loss"]
+    val_loss = history.history["val_loss"]
 
-        """ Compute GE, SR and NT for validation set """
-        ge_validation, sr_validation, nt_validation = sca_metrics(
-            model, dpav42_dataset.x_validation, n_validation_ge, dpav42_dataset.labels_key_hypothesis_validation,
-            dpav42_dataset.correct_key_validation)
+    """ Compute GE, SR and NT for validation set """
+    ge_validation, sr_validation, nt_validation = sca_metrics(
+        model, dpav42_dataset.x_validation, n_validation_ge, dpav42_dataset.labels_key_hypothesis_validation,
+        dpav42_dataset.correct_key_validation)
 
-        print(f"GE validation: {ge_validation[n_validation_ge - 1]}")
-        print(f"SR validation: {sr_validation[n_validation_ge - 1]}")
-        print(f"Number of traces to reach GE = 1: {nt_validation}")
+    print(f"GE validation: {ge_validation[n_validation_ge - 1]}")
+    print(f"SR validation: {sr_validation[n_validation_ge - 1]}")
+    print(f"Number of traces to reach GE = 1: {nt_validation}")
 
-        """ Compute GE, SR and NT for attack set """
-        ge_attack, sr_attack, nt_attack = sca_metrics(
-            model, dpav42_dataset.x_attack, n_attack_ge, dpav42_dataset.labels_key_hypothesis_attack, dpav42_dataset.correct_key_attack)
+    """ Compute GE, SR and NT for attack set """
+    ge_attack, sr_attack, nt_attack = sca_metrics(
+        model, dpav42_dataset.x_attack, n_attack_ge, dpav42_dataset.labels_key_hypothesis_attack, dpav42_dataset.correct_key_attack)
 
-        print(f"GE attack: {ge_attack[n_attack_ge - 1]}")
-        print(f"SR attack: {sr_attack[n_attack_ge - 1]}")
-        print(f"Number of traces to reach GE = 1: {nt_attack}")
+    print(f"GE attack: {ge_attack[n_attack_ge - 1]}")
+    print(f"SR attack: {sr_attack[n_attack_ge - 1]}")
+    print(f"Number of traces to reach GE = 1: {nt_attack}")
 
-        total_time = time.time() - start_time
+    total_time = time.time() - start_time
 
-        """ Check the existing amount of searches in folder """
-        file_count = 0
-        for name in glob.glob(f"{save_folder}/dpav42_{model_name}_{leakage_model}_{npoi}_*.npz"):
-            file_count += 1
+    """ Create dictionary with results """
+    npz_dict = {"npoi": npoi, "target_byte": target_byte, "n_profiling": n_profiling, "n_attack": n_attack,
+                "n_validation": n_validation, "n_attack_ge": n_attack_ge, "n_validation_ge": n_validation_ge, "hp": hp,
+                "ge_validation": ge_validation, "sr_validation": sr_validation, "nt_validation": nt_validation, "ge_attack": ge_attack,
+                "sr_attack": sr_attack, "nt_attack": nt_attack, "accuracy": accuracy, "val_accuracy": val_accuracy, "loss": loss,
+                "val_loss": val_loss, "elapsed_time": total_time, "seed": seed, "params": model.count_params()}
 
-        """ Create dictionary with results """
-        npz_dict = {"npoi": npoi, "target_byte": target_byte, "n_profiling": n_profiling, "n_attack": n_attack,
-                    "n_validation": n_validation, "n_attack_ge": n_attack_ge, "n_validation_ge": n_validation_ge, "hp": hp,
-                    "ge_validation": ge_validation, "sr_validation": sr_validation, "nt_validation": nt_validation, "ge_attack": ge_attack,
-                    "sr_attack": sr_attack, "nt_attack": nt_attack, "accuracy": accuracy, "val_accuracy": val_accuracy, "loss": loss,
-                    "val_loss": val_loss, "elapsed_time": total_time, "seed": seed, "params": model.count_params()}
-
-        """ Save npz file with results """
-        np.savez(f"{save_folder}/dpav42_{model_name}_{leakage_model}_{npoi}_{file_count + 1}.npz", npz_dict=npz_dict)
+    """ Save npz file with results """
+    np.savez(f"{save_folder}/random_search/{model_name}_{leakage_model}_{npoi}_{search_id}.npz", npz_dict=npz_dict)

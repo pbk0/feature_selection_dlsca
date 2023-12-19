@@ -116,14 +116,17 @@ We call the best models 100 times to get statistic for number of traces needed f
 ### ASCADf
 
 ```bash
-mkdir -p _results/ASCADV2/ascadv2_opoi/best_model_runs/
-for n in {1..4}; 
+for n in {1..2}; 
 do
-  for lk in ID HW;
+  for ds in ASCADf ASCADr CHESCTF;
   do 
-    for nn in mlp cnn;
-    do
-      bsub -oo "_results/ASCADf/ASCAD_opoi/best_model_runs/ascad-variable_${nn}_${lk}_700_${n}.log" python experiments/ASCADV2/test_best_models.py ${lk} ${nn} OPOI 700 0 ${n}
+    mkdir -p _results/${ds}/opoi/test_best_models/
+    for lk in ID HW;
+    do 
+      for nn in mlp cnn;
+      do
+        bsub -oo "_results/${ds}/opoi/test_best_models/${nn}_${lk}_700_${n}.log" python experiments/${ds}/test_best_models.py ${lk} ${nn} OPOI 700 0 ${n}
+      done
     done
   done
 done
