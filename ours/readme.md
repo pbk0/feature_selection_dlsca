@@ -125,7 +125,7 @@ do
     do 
       for nn in mlp cnn;
       do
-        bsub -oo "_results/${ds}/opoi/test_best_models/${nn}_${lk}_700_${n}.log" python experiments/${ds}/test_best_models.py ${lk} ${nn} OPOI 700 0 ${n}
+        bsub -oo "_results/${ds}/opoi/orig/test_best_models/${nn}_${lk}_700_${n}.log" python experiments/${ds}/test_best_models.py ${lk} ${nn} OPOI 700 0 ${n}
       done
     done
   done

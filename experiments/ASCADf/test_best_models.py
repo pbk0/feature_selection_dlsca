@@ -135,5 +135,5 @@ if __name__ == "__main__":
                 "val_loss": val_loss, "params": model.count_params()}
 
     """ Save npz file with results """
-    np.savez(f"{save_folder}/original/best_model_runs/ASCAD_{model_name}_{leakage_model}_{npoi}_{run_id}.npz", npz_dict=npz_dict)
+    np.savez(f"{save_folder}/orig/test_best_models/{model_name}_{leakage_model}_{npoi}_{run_id}.npz", npz_dict=npz_dict)
 
