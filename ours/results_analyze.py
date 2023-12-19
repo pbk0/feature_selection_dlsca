@@ -9,7 +9,7 @@ def print_best_hp(_path: str):
         if _npz.name.endswith(".log"):
             continue
         _data = np.load(_npz)
-        print(_data["hp"])
+        print(_data)
     
 
 
