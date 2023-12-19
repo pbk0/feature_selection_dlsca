@@ -109,18 +109,25 @@ python experiments\DPAV42\generate_dataset.py
 
 # Experiments
 
-## Calling best models
+## Calling best models over 100 times
 
 We call the best models 100 times to get statistic for number of traces needed for attack ...
 
 ### ASCADf
 
 ```bash
-set TF_ENABLE_ONEDNN_OPTS=0
-python experiments/ASCADf/test_best_models.py HW mlp OPOI 700 2 0
-python experiments/ASCADf/test_best_models.py ID mlp OPOI 700 2 0
-python experiments/ASCADf/test_best_models.py HW cnn OPOI 700 2 0
-python experiments/ASCADf/test_best_models.py ID cnn OPOI 700 2 0
+mkdir -p _results/ASCADV2/ascadv2_opoi/best_model_runs/
+for n in {1..4}; 
+do
+  for lk in ID HW;
+  do 
+    for nn in mlp cnn;
+    do
+      bsub -oo "_results/ASCADf/ASCAD_opoi/best_model_runs/ascad-variable_${nn}_${lk}_700_${n}.log" python experiments/ASCADV2/test_best_models.py ${lk} ${nn} OPOI 700 0 ${n}
+    done
+  done
+done
+python ours/results_analyze.py "_results/ASCADV2/ascadv2_opoi"
 ```
 
 ### ASCADr
