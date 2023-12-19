@@ -155,16 +155,16 @@ python experiments/CHESCTF/test_best_models.py ID cnn OPOI 4000 2 0
 This is just an experiment to check if standard classifiers work with ASCADv2
 
 ```bash
-mkdir -p _results/ASCADV2/ascadv2_opoi
+mkdir -p _results/ASCADV2/opoi/random_search
 for n in {1..500}; 
 do
   for lk in ID HW;
   do 
     for nn in mlp cnn;
     do
-      bsub -oo "_results/ASCADV2/ascadv2_opoi/ascad-variable_${nn}_${lk}_7181_${n}.log" python experiments/ASCADV2/random_search.py ${lk} ${nn} OPOI 7181 True 0 ${n}
+      bsub -oo "_results/ASCADV2/opoi/random_search/${nn}_${lk}_7181_${n}.log" python experiments/ASCADV2/random_search.py ${lk} ${nn} OPOI 7181 True 0 ${n}
     done
   done
 done
-python ours/results_analyze.py "_results/ASCADV2/ascadv2_opoi"
+python ours/results_analyze.py "_results/ASCADV2/opoi/random_search"
 ```
