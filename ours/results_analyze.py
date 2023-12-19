@@ -1,11 +1,15 @@
 import sys
 import pathlib
+import numpy as np
 
 
 def print_best_hp(_path: str):
     print(_path)
     for _npz in pathlib.Path(_path).glob("*"):
-        print(_npz)
+        if _npz.name.endswith(".log"):
+            continue
+        _data = np.load(_npz)
+        print(_data["hp"])
     
 
 
