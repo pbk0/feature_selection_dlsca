@@ -43,7 +43,7 @@ def get_hyperparemeters_cnn(regularization=False, search_id: int = None):
             "Please supply search id to create random hp that is deterministic based on search id")
     
     hyperparameters = {}
-    hyperparameters_mlp = get_hyperparameters_mlp(regularization=regularization, max_dense_layers=4)
+    hyperparameters_mlp = get_hyperparameters_mlp(regularization=regularization, max_dense_layers=4, search_id=search_id)
     for key, value in hyperparameters_mlp.items():
         hyperparameters[key] = value
         

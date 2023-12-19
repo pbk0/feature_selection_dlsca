@@ -151,13 +151,16 @@ python experiments/CHESCTF/test_best_models.py ID cnn OPOI 4000 2 0
 # Search best model for ASCADv2
 
 ```bash
-mkdir _results/ASCADV2/ascadv2_opoi
-for n in {1..500}; 
+mkdir -p _results/ASCADV2/ascadv2_opoi
+for n in {1..2}; 
 do
-    bsub -oo "HW mlp OPOI 7181 True 0 $n.log" python experiments/ASCADV2/random_search.py HW mlp OPOI 7181 True 0 $n
-    bsub -oo "ID mlp OPOI 7181 True 0 $n.log" python experiments/ASCADV2/random_search.py ID mlp OPOI 7181 True 0 $n
-    bsub -oo "HW cnn OPOI 7181 True 0 $n.log" python experiments/ASCADV2/random_search.py HW cnn OPOI 7181 True 0 $n
-    bsub -oo "ID cnn OPOI 7181 True 0 $n.log" python experiments/ASCADV2/random_search.py ID cnn OPOI 7181 True 0 $n
+  for lk in ID HW;
+  do 
+    for nn in mlp cnn;
+    do
+      bsub -oo "_results/ASCADV2/ascadv2_opoi/ascad-variable_${nn}_${lk}_7181_${n}.log" python experiments/ASCADV2/random_search.py ${lk} ${nn} OPOI 7181 True 0 ${n}
+    done
+  done
 done
 
 ```
