@@ -14,7 +14,7 @@ def print_best_hp(_path: str):
             _nt_attack = _data["nt_attack"]
             _best_results = _data
     for _k, _v in _best_results.items():
-        print(_k, _v)
+        print("   >> ", _k, _v)
     
 
 
