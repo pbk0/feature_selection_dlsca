@@ -4,7 +4,7 @@ import pathlib
 
 def print_best_hp(_path: str):
     print(_path)
-    for _npz in pathlib.Path(_path).glob("**"):
+    for _npz in pathlib.Path(_path).glob("*"):
         print(_npz)
     
 
