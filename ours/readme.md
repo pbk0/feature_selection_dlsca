@@ -86,7 +86,7 @@ python experiments\ASCADV2\generate_dataset.py
 
 ## ~~DPAV42~~
 
-We do not include this dataset for our experiments as the dataset is comparatively easy similar to full version datatsets where all samples are used ...
+We do not include this dataset for our experiments as the dataset is comparatively easy similar to full version datasets where all samples are used ...
 
 ```pwsh
 cd _traces
