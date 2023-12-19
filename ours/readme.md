@@ -89,13 +89,7 @@ python experiments\ASCADV2\generate_dataset.py
 
 ### ~~DPAV42~~
 
-We ignore this dataset as it is not clear how to generate it.
-
-Also the attack dataset is created of last two sets which has different keys while first 14 groups are used to generate profiling traces. This makes the attack dataset to not be fixed ...
-
-Apart from that the results on this dataset for OPOI are already close to 1 and make it difficult to compare models ...
-
-Also we do not have acces to chunked *.h5 files taht are used by `merge_dataset()` method provided in script `experiments\DPAV42\generate_dataset.py`
+We do not include this dataset for our experiments as the dataset is comparatively easy similar to full version datatsets where all samples are used ...
 
 ```pwsh
 cd _traces
@@ -116,10 +110,13 @@ python experiments\DPAV42\generate_dataset.py
 ```
 
 
+# Experiments
 
-# Calling best models
+## Calling best models
 
-## ASCADf
+We call the best models 100 times to get statistic for number of traces needed for attack ...
+
+### ASCADf
 
 ```bash
 set TF_ENABLE_ONEDNN_OPTS=0
@@ -129,7 +126,7 @@ python experiments/ASCADf/test_best_models.py HW cnn OPOI 700 2 0
 python experiments/ASCADf/test_best_models.py ID cnn OPOI 700 2 0
 ```
 
-## ASCADr
+### ASCADr
 
 ```bash
 python experiments/ASCADr/test_best_models.py HW mlp OPOI 1400 2 0
@@ -138,7 +135,7 @@ python experiments/ASCADr/test_best_models.py HW cnn OPOI 1400 2 0
 python experiments/ASCADr/test_best_models.py ID cnn OPOI 1400 2 0
 ```
 
-## CHESCTF
+### CHESCTF
 
 ```bash
 python experiments/CHESCTF/test_best_models.py HW mlp OPOI 4000 2 0
@@ -149,7 +146,9 @@ python experiments/CHESCTF/test_best_models.py ID cnn OPOI 4000 2 0
 
 
 
-# Search best model for ASCADv2
+## Search best model for ASCADv2
+
+This is just an experiment to check if standard classifiers work with ASCADv2
 
 ```bash
 mkdir -p _results/ASCADV2/ascadv2_opoi
