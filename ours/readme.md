@@ -152,8 +152,12 @@ python experiments/CHESCTF/test_best_models.py ID cnn OPOI 4000 2 0
 
 ```bash
 mkdir _results/ASCADV2/ascadv2_opoi
-python experiments/ASCADV2/random_search.py HW mlp OPOI 7181 True 0 0
-python experiments/ASCADV2/random_search.py ID mlp OPOI 7181 True 0 0
-python experiments/ASCADV2/random_search.py HW cnn OPOI 7181 True 0 0
-python experiments/ASCADV2/random_search.py ID cnn OPOI 7181 True 0 0
+for n in {1..500}; 
+do
+    bsub -oo "HW mlp OPOI 7181 True 0 $n.log" python experiments/ASCADV2/random_search.py HW mlp OPOI 7181 True 0 $n
+    bsub -oo "ID mlp OPOI 7181 True 0 $n.log" python experiments/ASCADV2/random_search.py ID mlp OPOI 7181 True 0 $n
+    bsub -oo "HW cnn OPOI 7181 True 0 $n.log" python experiments/ASCADV2/random_search.py HW cnn OPOI 7181 True 0 $n
+    bsub -oo "ID cnn OPOI 7181 True 0 $n.log" python experiments/ASCADV2/random_search.py ID cnn OPOI 7181 True 0 $n
+done
+
 ```
