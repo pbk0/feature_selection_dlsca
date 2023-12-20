@@ -90,7 +90,7 @@ def best_model_runs(_path: str):
     # iterating over the numbers in list
     for fig in figs:
         # and saving the files
-        fig.savefig(_p, format='pdf')
+        fig.savefig(_p, format='pdf', dpi=300)
         
         # close the object
     _p.close()
