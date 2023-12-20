@@ -48,7 +48,7 @@ def best_model_runs(_path: str):
         _data = np.load(_npz, allow_pickle=True)["npz_dict"][()]
         _nt_attack = _data["nt_attack"]
         _results[_key]["nt_attack"].append(_nt_attack)
-        if _nt_attack >= 0:
+        if _nt_attack >= 3000:
             _results[_key]["failed"] += 1
         _results[_key]["total"] += 1
         
