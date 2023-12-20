@@ -138,6 +138,39 @@ python ours/results_analyze.py bmr orig
 ```
 
 
+## Calling 5 random models over 100 times
+
+We get some five random models per case and call it 100 times
+
+```bash
+mkdir -p _results/ASCADf/opoi/orig/test_5_random_models/
+mkdir -p _results/ASCADr/opoi/orig/test_5_random_models/
+mkdir -p _results/CHESCTF/opoi/orig/test_5_random_models/
+for n in {1..100}; 
+do
+  for lk in ID HW;
+  do 
+    for nn in mlp cnn;
+    do
+      for rs in 2 7 99 34 21;
+      do
+        bsub -oo "_results/ASCADf/opoi/orig/test_5_random_models/${nn}_${lk}_700_${n}_${rs}.log" python experiments/ASCADf/test_5_random_models.py ${lk} ${nn} OPOI 700 0 ${n} ${rs}
+        bsub -oo "_results/ASCADr/opoi/orig/test_5_random_models/${nn}_${lk}_700_${n}_${rs}.log" python experiments/ASCADr/test_5_random_models.py ${lk} ${nn} OPOI 1400 0 ${n} ${rs}
+        bsub -oo "_results/CHESCTF/opoi/orig/test_5_random_models/${nn}_${lk}_700_${n}_${rs}.log" python experiments/CHESCTF/test_5_random_models.py ${lk} ${nn} OPOI 4000 0 ${n} ${rs}
+      done
+    done
+  done
+done
+
+cd _results
+find . -name "*.pdf" -type f
+find . -name "*.pdf" -type f -delete
+cd ..
+python ours/results_analyze.py bmr orig
+```
+
+
+
 
 ## Search best model for ASCADv2
 
