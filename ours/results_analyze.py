@@ -45,15 +45,13 @@ def best_model_runs(_exp_type: str):
         for _ds in [
             "ASCADf", "ASCADr", "CHESCTF"
         ]:
-            _catplot = best_model_runs_for_dataset(_dataset=_ds, _exp_type=_exp_type)
-            print(">>>>>>>>>>>>>>>>>>>", type(_catplot))
-            _pdf.savefig(dpi=300)
-            _catplot.close()
+            _fig = best_model_runs_for_dataset(_dataset=_ds, _exp_type=_exp_type)
+            _pdf.savefig(figure=_fig, dpi=300)
     
     subprocess.run(["xdg-open", _pdf_file.absolute().resolve().as_posix()])
     
 
-def best_model_runs_for_dataset(_dataset: str, _exp_type: str, ):
+def best_model_runs_for_dataset(_dataset: str, _exp_type: str, ) -> plt.Figure:
     _results = {
         "MLP:ID": {"nt_attack": [], "failed": 0, "total": 0},
         "MLP:HW": {"nt_attack": [], "failed": 0, "total": 0},
@@ -117,7 +115,7 @@ def best_model_runs_for_dataset(_dataset: str, _exp_type: str, ):
                     va="center",  # Vertical alignment
             )
     
-    return _catplot
+    return _catplot.get_figure()
     
 
 if __name__ == "__main__":
