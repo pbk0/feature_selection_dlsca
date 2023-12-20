@@ -113,8 +113,6 @@ python experiments\DPAV42\generate_dataset.py
 
 We call the best models 100 times to get statistic for number of traces needed for attack ...
 
-### ASCADf
-
 ```bash
 mkdir -p _results/ASCADf/opoi/orig/test_best_models/
 mkdir -p _results/ASCADr/opoi/orig/test_best_models/
@@ -131,7 +129,12 @@ do
     done
   done
 done
-python ours/results_analyze.py bmr "_results/ASCADf/opoi/orig/test_best_models" 
+
+cd _results
+find . -name "*.pdf" -type f
+find . -name "*.pdf" -type f -delete
+cd ..
+python ours/results_analyze.py bmr orig
 python ours/results_analyze.py bmr "_results/ASCADr/opoi/orig/test_best_models" 
 python ours/results_analyze.py bmr "_results/CHESCTF/opoi/orig/test_best_models" 
 ```

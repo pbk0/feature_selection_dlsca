@@ -33,14 +33,43 @@ def print_best_hp(_path: str):
             print("   >> ", _k, _v)
     
 
-def best_model_runs(_path: str):
+def best_model_runs(_exp_type: str):
+    for _ds in [
+        "ASCADf", "ASCADr", "CHESCTF"
+    ]:
+        best_model_runs_for_dataset(_dataset=_ds, _exp_type=_exp_type)
+    
+    # PdfPages is a wrapper around pdf
+    # file so there is no clash and create
+    # files with no error.
+    _pdf_file = pathlib.Path(f"_results/opoi_{_exp_type}_best_model_runs.pdf")
+    _pdf_file.unlink(missing_ok=True)
+    _p = PdfPages(_pdf_file)
+    
+    # get_fignums Return list of existing
+    # figure numbers
+    fig_nums = plt.get_fignums()
+    figs = [plt.figure(n) for n in fig_nums]
+    
+    # iterating over the numbers in list
+    for fig in figs:
+        # and saving the files
+        fig.savefig(_p, format='pdf', dpi=300)
+        
+        # close the object
+    _p.close()
+    
+    subprocess.run(["xdg-open", _pdf_file.absolute().resolve().as_posix()])
+    
+
+def best_model_runs_for_dataset(_dataset: str, _exp_type: str, ):
     _results = {
         "MLP:ID": {"nt_attack": [], "failed": 0, "total": 0},
         "MLP:HW": {"nt_attack": [], "failed": 0, "total": 0},
         "CNN:ID": {"nt_attack": [], "failed": 0, "total": 0},
         "CNN:HW": {"nt_attack": [], "failed": 0, "total": 0},
     }
-    for _npz in pathlib.Path(_path).glob("*"):
+    for _npz in pathlib.Path(f"_results/{_dataset}/opoi/{_exp_type}/test_best_models").glob("*"):
         if not _npz.name.endswith(".npz"):
             continue
         _tokens = _npz.name.split("_")
@@ -70,7 +99,7 @@ def best_model_runs(_path: str):
         data=_df,
         alpha=0.5, s=3,
     )
-    _catplot.set(title=_path.split("/")[1])
+    _catplot.set(title=_dataset)
     _fontsize = 8
     _offset = _fontsize * 4
     _annotation_y = 1000
@@ -97,46 +126,16 @@ def best_model_runs(_path: str):
                     va="center",  # Vertical alignment
             )
     
-    fig1 = plt.figure()
-    plt.plot([17, 45, 7, 8, 7], color='orange')
-    
-    fig2 = plt.figure()
-    plt.plot([13, 25, 1, 6, 3], color='blue')
-    
-    Fig3 = plt.figure()
-    plt.plot([22, 11, 2, 1, 23], color='green')
-    
-    # PdfPages is a wrapper around pdf
-    # file so there is no clash and create
-    # files with no error.
-    _pdf_file = pathlib.Path(_path) / "best_model_runs.pdf"
-    _pdf_file.unlink(missing_ok=True)
-    _p = PdfPages(_pdf_file)
-    
-    # get_fignums Return list of existing
-    # figure numbers
-    fig_nums = plt.get_fignums()
-    figs = [plt.figure(n) for n in fig_nums]
-    
-    # iterating over the numbers in list
-    for fig in figs:
-        # and saving the files
-        fig.savefig(_p, format='pdf', dpi=300)
-        
-        # close the object
-    _p.close()
-    
-    subprocess.run(["xdg-open", _pdf_file.absolute().resolve().as_posix()])
-    
 
 if __name__ == "__main__":
 
     _mode = sys.argv[1]
-    _path = sys.argv[2]
     
     if _mode == "pbhp":
-        print_best_hp(_path=_path)
+        __path = sys.argv[2]
+        print_best_hp(_path=__path)
     elif _mode == "bmr":
-        best_model_runs(_path=_path)
+        __exp_type = sys.argv[2]
+        best_model_runs(_exp_type=__exp_type)
     else:
         raise Exception(f"Unsupported {_mode=}")
