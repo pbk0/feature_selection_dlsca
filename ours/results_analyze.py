@@ -47,9 +47,9 @@ def best_model_runs(_path: str):
     
 
 if __name__ == "__main__":
-    
-    _path = sys.argv[1]
-    _mode = sys.argv[2]
+
+    _mode = sys.argv[1]
+    _path = sys.argv[2]
     
     if _mode == "pbhp":
         print_best_hp(_path=_path)

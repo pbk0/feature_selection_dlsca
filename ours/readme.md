@@ -131,9 +131,9 @@ do
     done
   done
 done
-python ours/results_analyze.py "_results/ASCADf/opoi/orig/test_best_models" pbhp
-python ours/results_analyze.py "_results/ASCADr/opoi/orig/test_best_models" pbhp
-python ours/results_analyze.py "_results/CHESCTF/opoi/orig/test_best_models" pbhp
+python ours/results_analyze.py bmr "_results/ASCADf/opoi/orig/test_best_models" 
+python ours/results_analyze.py bmr "_results/ASCADr/opoi/orig/test_best_models" 
+python ours/results_analyze.py bmr "_results/CHESCTF/opoi/orig/test_best_models" 
 ```
 
 
