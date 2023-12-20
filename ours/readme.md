@@ -166,7 +166,7 @@ cd _results
 find . -name "*.pdf" -type f
 find . -name "*.pdf" -type f -delete
 cd ..
-python ours/results_analyze.py bmr orig
+python ours/results_analyze.py t5rmr orig
 ```
 
 
