@@ -34,30 +34,20 @@ def print_best_hp(_path: str):
     
 
 def best_model_runs(_exp_type: str):
-    for _ds in [
-        "ASCADf", "ASCADr", "CHESCTF"
-    ]:
-        best_model_runs_for_dataset(_dataset=_ds, _exp_type=_exp_type)
     
     # PdfPages is a wrapper around pdf
     # file so there is no clash and create
     # files with no error.
     _pdf_file = pathlib.Path(f"_results/opoi_{_exp_type}_best_model_runs.pdf")
     _pdf_file.unlink(missing_ok=True)
-    _p = PdfPages(_pdf_file)
     
-    # get_fignums Return list of existing
-    # figure numbers
-    fig_nums = plt.get_fignums()
-    figs = [plt.figure(n) for n in fig_nums]
-    
-    # iterating over the numbers in list
-    for fig in figs:
-        # and saving the files
-        fig.savefig(_p, format='pdf', dpi=300)
-        
-        # close the object
-    _p.close()
+    with PdfPages(_pdf_file) as _pdf:
+        for _ds in [
+            "ASCADf", "ASCADr", "CHESCTF"
+        ]:
+            _catplot = best_model_runs_for_dataset(_dataset=_ds, _exp_type=_exp_type)
+            _pdf.savefig(_catplot, format='pdf', dpi=300)
+            _catplot.close()
     
     subprocess.run(["xdg-open", _pdf_file.absolute().resolve().as_posix()])
     
@@ -125,6 +115,8 @@ def best_model_runs_for_dataset(_dataset: str, _exp_type: str, ):
                     ha="center",  # Horizontal alignment
                     va="center",  # Vertical alignment
             )
+    
+    return _catplot
     
 
 if __name__ == "__main__":
