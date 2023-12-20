@@ -131,25 +131,9 @@ do
     done
   done
 done
-python ours/results_analyze.py "_results/ASCADV2/ascadv2_opoi"
-```
-
-### ASCADr
-
-```bash
-python experiments/ASCADr/test_best_models.py HW mlp OPOI 1400 2 0
-python experiments/ASCADr/test_best_models.py ID mlp OPOI 1400 2 0
-python experiments/ASCADr/test_best_models.py HW cnn OPOI 1400 2 0
-python experiments/ASCADr/test_best_models.py ID cnn OPOI 1400 2 0
-```
-
-### CHESCTF
-
-```bash
-python experiments/CHESCTF/test_best_models.py HW mlp OPOI 4000 2 0
-python experiments/CHESCTF/test_best_models.py ID mlp OPOI 4000 2 0
-python experiments/CHESCTF/test_best_models.py HW cnn OPOI 4000 2 0
-python experiments/CHESCTF/test_best_models.py ID cnn OPOI 4000 2 0
+python ours/results_analyze.py "_results/ASCADf/opoi/orig/test_best_models" pbhp
+python ours/results_analyze.py "_results/ASCADr/opoi/orig/test_best_models" pbhp
+python ours/results_analyze.py "_results/CHESCTF/opoi/orig/test_best_models" pbhp
 ```
 
 
