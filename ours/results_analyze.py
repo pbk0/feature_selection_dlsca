@@ -64,7 +64,7 @@ def best_model_runs(_path: str):
     plt.rcParams["figure.autolayout"] = True
     
     # violin plot
-    sns.catplot(data=_df, kind='violin')
+    sns.catplot(data=_df, kind='swarm')
     
     fig1 = plt.figure()
     plt.plot([17, 45, 7, 8, 7], color='orange')
