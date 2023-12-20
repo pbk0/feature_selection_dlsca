@@ -46,6 +46,7 @@ def best_model_runs(_exp_type: str):
             "ASCADf", "ASCADr", "CHESCTF"
         ]:
             _catplot = best_model_runs_for_dataset(_dataset=_ds, _exp_type=_exp_type)
+            print(">>>>>>>>>>>>>>>>>>>", type(_catplot))
             _pdf.savefig(_catplot, format='pdf', dpi=300)
             _catplot.close()
     
