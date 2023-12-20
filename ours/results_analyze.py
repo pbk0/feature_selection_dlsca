@@ -53,6 +53,26 @@ def best_model_runs(_exp_type: str):
     
 
 def best_model_runs_for_dataset(_dataset: str, _exp_type: str, ) -> plt.Figure:
+    _reported = {
+        "ASCADf": {
+            "MLP:ID": 0,
+            "MLP:HW": 0,
+            "CNN:ID": 0,
+            "CNN:HW": 0,
+        },
+        "ASCADr": {
+            "MLP:ID": 0,
+            "MLP:HW": 0,
+            "CNN:ID": 0,
+            "CNN:HW": 0,
+        },
+        "CHESCTF": {
+            "MLP:ID": 0,
+            "MLP:HW": 0,
+            "CNN:ID": 0,
+            "CNN:HW": 0,
+        },
+    }[_dataset]
     _results = {
         "MLP:ID": {"nt_attack": [], "failed": 0, "total": 0},
         "MLP:HW": {"nt_attack": [], "failed": 0, "total": 0},
@@ -103,7 +123,7 @@ def best_model_runs_for_dataset(_dataset: str, _exp_type: str, ) -> plt.Figure:
         _failed = _failed_percent > 0
         _color = "red" if _failed else "blue"
         for _i, _msg in enumerate([
-            f"[ reported: {00} ]",
+            f"[ reported: {_reported[_k]} ]",
             f"max: {'NA' if _failed else max(_nt_attack)}",
             f"min: {min(_nt_attack)}",
             f"failed: {_failed_percent:.2f}%",
