@@ -6,6 +6,7 @@ import numpy as np
 def print_best_hp(_path: str):
     _nt_attack = np.inf
     _best_results = None
+    _best_results_file = None
     _total_experiments = 0
     for _npz in pathlib.Path(_path).glob("*"):
         if _npz.name.endswith(".log"):
@@ -15,9 +16,14 @@ def print_best_hp(_path: str):
         if _data["nt_attack"] < _nt_attack:
             _nt_attack = _data["nt_attack"]
             _best_results = _data
+            _best_results_file = _npz
     print("total experiments", _total_experiments)
+    print("best results for", _best_results_file)
     for _k, _v in _best_results.items():
-        print("   >> ", _k, _v)
+        if isinstance(_v, list):
+            print("   >> ", _k, _v[-3:])
+        else:
+            print("   >> ", _k, _v)
     
 
 
