@@ -3,9 +3,11 @@ import sys
 import pathlib
 import numpy as np
 
-import matplotlib
 from matplotlib import pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
+import seaborn as sns
+import matplotlib.pyplot as plt
+import pandas as pd
 
 
 def print_best_hp(_path: str):
@@ -48,11 +50,21 @@ def best_model_runs(_path: str):
         _results[_model_type][_lk_model].append(
             _data["nt_attack"]
         )
+        
+    # make dataframe
+    _df = pd.DataFrame()
+    _df["MLP:ID"] = _results["mlp"]["ID"]
+    _df["MLP:HW"] = _results["mlp"]["HW"]
+    _df["CNN:ID"] = _results["cnn"]["ID"]
+    _df["CNN:HW"] = _results["cnn"]["HW"]
     
     # customizing runtime configuration stored
     # in matplotlib.rcParams
     plt.rcParams["figure.figsize"] = [7.00, 3.50]
     plt.rcParams["figure.autolayout"] = True
+    
+    # violin plot
+    sns.catplot(data=df, kind='violin')
     
     fig1 = plt.figure()
     plt.plot([17, 45, 7, 8, 7], color='orange')
