@@ -68,7 +68,7 @@ def best_model_runs(_path: str):
     # files with no error.
     _pdf_file = pathlib.Path(_path) / "best_model_runs.pdf"
     _pdf_file.unlink(missing_ok=True)
-    p = PdfPages(_pdf_file)
+    _p = PdfPages(_pdf_file)
     
     # get_fignums Return list of existing
     # figure numbers
@@ -78,10 +78,10 @@ def best_model_runs(_path: str):
     # iterating over the numbers in list
     for fig in figs:
         # and saving the files
-        fig.savefig(p, format='pdf')
+        fig.savefig(_p, format='pdf')
         
         # close the object
-    p.close()
+    _p.close()
     
     subprocess.run(["xdg-open", _pdf_file.absolute().resolve().as_posix()])
     
