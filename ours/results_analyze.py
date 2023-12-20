@@ -63,19 +63,19 @@ def best_model_runs(_path: str):
     
     # customizing runtime configuration stored
     # in matplotlib.rcParams
-    plt.rcParams["figure.figsize"] = [7.00, 3.50]
+    # plt.rcParams["figure.figsize"] = [7.00, 3.50]
     plt.rcParams["figure.autolayout"] = True
     
     # violin plot
     _catplot = sns.swarmplot(
         data=_df,
-        alpha=0.5, s=5,
+        alpha=0.5, s=4,
     )
     # for ax in _catplot.fig.axes:
     #     ax.set_yscale('log')
     _catplot.text(
         "MLP:ID", 1.75, "Custom text",
-            fontsize=12,  # Size
+            fontsize=8,  # Size
             fontstyle="oblique",  # Style
             color="red",  # Color
             ha="center",  # Horizontal alignment
