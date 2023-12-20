@@ -66,7 +66,7 @@ def best_model_runs(_path: str):
     # violin plot
     _catplot = sns.catplot(
         data=_df, kind='swarm',
-        alpha=0.5, linewidth=1, height=1, aspect=0.7, s=1,
+        alpha=0.5, s=1,
     )
     # for ax in _catplot.fig.axes:
     #     ax.set_yscale('log')
