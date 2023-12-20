@@ -67,6 +67,7 @@ def best_model_runs(_path: str):
     # file so there is no clash and create
     # files with no error.
     _pdf_file = pathlib.Path(_path) / "best_model_runs.pdf"
+    _pdf_file.unlink(missing_ok=True)
     p = PdfPages(_pdf_file)
     
     # get_fignums Return list of existing
