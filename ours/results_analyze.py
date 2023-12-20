@@ -67,12 +67,20 @@ def best_model_runs(_path: str):
     plt.rcParams["figure.autolayout"] = True
     
     # violin plot
-    _catplot = sns.catplot(
-        data=_df, kind='swarm',
-        alpha=0.5, s=4,
+    _catplot = sns.swarmplot(
+        data=_df,
+        alpha=0.5, s=5,
     )
     # for ax in _catplot.fig.axes:
     #     ax.set_yscale('log')
+    _catplot.text(
+        "MLP:ID", 1.75, "Custom text",
+            fontsize=12,  # Size
+            fontstyle="oblique",  # Style
+            color="red",  # Color
+            ha="center",  # Horizontal alignment
+            va="center",  # Vertical alignment
+    )
     
     fig1 = plt.figure()
     plt.plot([17, 45, 7, 8, 7], color='orange')
