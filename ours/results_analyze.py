@@ -93,7 +93,7 @@ def best_model_runs_for_dataset(_dataset: str, _exp_type: str, ) -> plt.Figure:
     _fontsize = 8
     _offset = _fontsize * 4
     _annotation_y = 1000
-    _catplot.set(ylim=(0, _annotation_y + 4*_offset))
+    _catplot.set(ylim=(0, _annotation_y + 5*_offset))
     # for ax in _catplot.fig.axes:
     #     ax.set_yscale('log')
     
@@ -103,6 +103,7 @@ def best_model_runs_for_dataset(_dataset: str, _exp_type: str, ) -> plt.Figure:
         _failed = _failed_percent > 0
         _color = "red" if _failed else "blue"
         for _i, _msg in enumerate([
+            f"[ reported: {00} ]",
             f"max: {'NA' if _failed else max(_nt_attack)}",
             f"min: {min(_nt_attack)}",
             f"failed: {_failed_percent:.2f}%",
