@@ -124,15 +124,15 @@ def best_model_runs_for_dataset(_dataset: str, _exp_type: str, ) -> plt.Figure:
         _color = "red" if _failed else "blue"
         _median = int(np.median(_nt_attack))
         if _median >= 3000:
-            _median = "NA"
+            _median = ">3000"
         _min = min(_nt_attack)
         if _min >= 3000:
-            _min = "NA"
+            _min = ">3000"
         for _i, _msg in enumerate([
             f"[reported: {_reported[_k]}]",
             f"min: {_min}",
             f"median: {_median}",
-            f"max: {'NA' if _failed else max(_nt_attack)}",
+            f"max: {'>3000' if _failed else max(_nt_attack)}",
             f"failed: {_failed_percent:.2f}%",
         ]):
             _catplot.text(
