@@ -9,7 +9,7 @@ def print_best_hp(_path: str):
     _best_results_file = None
     _total_experiments = 0
     for _npz in pathlib.Path(_path).glob("*"):
-        if _npz.name.endswith(".log"):
+        if not _npz.name.endswith(".npz"):
             continue
         _total_experiments += 1
         _data = np.load(_npz, allow_pickle=True)["npz_dict"][()]
@@ -26,6 +26,25 @@ def print_best_hp(_path: str):
             print("   >> ", _k, _v)
     
 
+def best_model_runs(_path: str):
+    _total_experiments = 0
+    _results = {
+        "mlp": {"ID": [], "HW": []},
+        "cnn": {"ID": [], "HW": []},
+    }
+    for _npz in pathlib.Path(_path).glob("*"):
+        if not _npz.name.endswith(".npz"):
+            continue
+        _tokens = _npz.name.split("_")
+        _model_type = _tokens[0]
+        _lk_model = _tokens[1]
+        _total_experiments += 1
+        _data = np.load(_npz, allow_pickle=True)["npz_dict"][()]
+        _results[_model_type][_lk_model].append(
+            _data["nt_attack"]
+        )
+    print(_results)
+    
 
 if __name__ == "__main__":
     
@@ -34,3 +53,7 @@ if __name__ == "__main__":
     
     if _mode == "pbhp":
         print_best_hp(_path=_path)
+    elif _mode == "bmr":
+        best_model_runs(_path=_path)
+    else:
+        raise Exception(f"Unsupported {_mode=}")
