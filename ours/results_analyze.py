@@ -54,10 +54,10 @@ def best_model_runs(_path: str):
         
     # make dataframe
     _df = pd.DataFrame()
-    _df["MLP:ID"] = _results["MLP:ID"]
-    _df["MLP:HW"] = _results["MLP:HW"]
-    _df["CNN:ID"] = _results["CNN:ID"]
-    _df["CNN:HW"] = _results["CNN:HW"]
+    _df["MLP:ID"] = _results["MLP:ID"]["nt_attack"]
+    _df["MLP:HW"] = _results["MLP:HW"]["nt_attack"]
+    _df["CNN:ID"] = _results["CNN:ID"]["nt_attack"]
+    _df["CNN:HW"] = _results["CNN:HW"]["nt_attack"]
     _df[_df >= 1000] = np.inf
     
     # customizing runtime configuration stored
