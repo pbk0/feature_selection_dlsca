@@ -21,7 +21,7 @@ def print_best_hp(_path: str):
     print("best results for", _best_results_file)
     for _k, _v in _best_results.items():
         if isinstance(_v, list):
-            print("   >> ", _k, _v[-3:])
+            print("   >> ", _k, np.asarray(_v))
         else:
             print("   >> ", _k, _v)
     
