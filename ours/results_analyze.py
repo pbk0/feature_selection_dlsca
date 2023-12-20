@@ -47,8 +47,11 @@ def best_model_runs(_path: str):
         _lk_model = _tokens[1]
         _total_experiments += 1
         _data = np.load(_npz, allow_pickle=True)["npz_dict"][()]
+        _nt_attack = _data["nt_attack"]
+        if _nt_attack >= 3000:
+            _nt_attack = np.inf
         _results[_model_type][_lk_model].append(
-            _data["nt_attack"]
+            _nt_attack
         )
         
     # make dataframe
