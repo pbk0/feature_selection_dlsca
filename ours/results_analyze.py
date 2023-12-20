@@ -67,10 +67,10 @@ def best_model_runs_for_dataset(_dataset: str, _exp_type: str, ) -> plt.Figure:
             "CNN:ID": 78,
         },
         "CHESCTF": {
-            "MLP:HW": 462,
-            "MLP:ID": ">3000",
-            "CNN:HW": 8,
-            "CNN:ID": 13,
+            "MLP:HW": 27,
+            "MLP:ID": 1905,
+            "CNN:HW": 462,
+            "CNN:ID": ">3000",
         },
     }[_dataset]
     _results = {
@@ -93,10 +93,10 @@ def best_model_runs_for_dataset(_dataset: str, _exp_type: str, ) -> plt.Figure:
         
     # make dataframe
     _df = pd.DataFrame()
-    _df["MLP:ID"] = _results["MLP:ID"]["nt_attack"]
     _df["MLP:HW"] = _results["MLP:HW"]["nt_attack"]
-    _df["CNN:ID"] = _results["CNN:ID"]["nt_attack"]
+    _df["MLP:ID"] = _results["MLP:ID"]["nt_attack"]
     _df["CNN:HW"] = _results["CNN:HW"]["nt_attack"]
+    _df["CNN:ID"] = _results["CNN:ID"]["nt_attack"]
     _df[_df >= 1000] = np.inf
     
     # customizing runtime configuration stored
