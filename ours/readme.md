@@ -135,8 +135,6 @@ find . -name "*.pdf" -type f
 find . -name "*.pdf" -type f -delete
 cd ..
 python ours/results_analyze.py bmr orig
-python ours/results_analyze.py bmr "_results/ASCADr/opoi/orig/test_best_models" 
-python ours/results_analyze.py bmr "_results/CHESCTF/opoi/orig/test_best_models" 
 ```
 
 
