@@ -64,7 +64,10 @@ def best_model_runs(_path: str):
     plt.rcParams["figure.autolayout"] = True
     
     # violin plot
-    _catplot = sns.stripplot(data=_df)
+    _catplot = sns.catplot(
+        data=_df, kind='swarm',
+        alpha=0.5, linewidth=3, height=6, aspect=0.7, s=5,
+    )
     # for ax in _catplot.fig.axes:
     #     ax.set_yscale('log')
     
