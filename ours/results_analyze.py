@@ -68,8 +68,9 @@ def best_model_runs(_path: str):
     # violin plot
     _catplot = sns.swarmplot(
         data=_df,
-        alpha=0.5, s=4,
+        alpha=0.5, s=3,
     )
+    _catplot.set(title=_path.split("/")[1])
     _fontsize = 8
     _offset = _fontsize * 4
     _annotation_y = 1000
