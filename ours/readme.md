@@ -146,13 +146,13 @@ We get some five random models per case and call it 100 times
 mkdir -p _results/ASCADf/opoi/orig/test_5_random_models/
 mkdir -p _results/ASCADr/opoi/orig/test_5_random_models/
 mkdir -p _results/CHESCTF/opoi/orig/test_5_random_models/
-for n in {1..100}; 
+for n in {1..10}; 
 do
   for lk in ID HW;
   do 
     for nn in mlp cnn;
     do
-      for rs in 2 7 99 34 21;
+      for rs in {1..50};
       do
         bsub -oo "_results/ASCADf/opoi/orig/test_5_random_models/${nn}_${lk}_700_${n}_${rs}.log" python experiments/ASCADf/test_5_random_models.py ${lk} ${nn} OPOI 700 0 ${n} ${rs}
         bsub -oo "_results/ASCADr/opoi/orig/test_5_random_models/${nn}_${lk}_700_${n}_${rs}.log" python experiments/ASCADr/test_5_random_models.py ${lk} ${nn} OPOI 1400 0 ${n} ${rs}
