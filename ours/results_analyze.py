@@ -47,7 +47,7 @@ def best_model_runs(_exp_type: str):
         ]:
             _catplot = best_model_runs_for_dataset(_dataset=_ds, _exp_type=_exp_type)
             print(">>>>>>>>>>>>>>>>>>>", type(_catplot))
-            _pdf.savefig(format='pdf', dpi=300)
+            _pdf.savefig(dpi=300)
             _catplot.close()
     
     subprocess.run(["xdg-open", _pdf_file.absolute().resolve().as_posix()])
