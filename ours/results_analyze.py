@@ -55,22 +55,22 @@ def best_model_runs(_exp_type: str):
 def best_model_runs_for_dataset(_dataset: str, _exp_type: str, ) -> plt.Figure:
     _reported = {
         "ASCADf": {
-            "MLP:ID": 0,
-            "MLP:HW": 0,
-            "CNN:ID": 0,
-            "CNN:HW": 0,
+            "MLP:HW": 480,
+            "MLP:ID": 104,
+            "CNN:HW": 744,
+            "CNN:ID": 87,
         },
         "ASCADr": {
-            "MLP:ID": 0,
-            "MLP:HW": 0,
-            "CNN:ID": 0,
-            "CNN:HW": 0,
+            "MLP:HW": 328,
+            "MLP:ID": 129,
+            "CNN:HW": 538,
+            "CNN:ID": 78,
         },
         "CHESCTF": {
-            "MLP:ID": 0,
-            "MLP:HW": 0,
-            "CNN:ID": 0,
-            "CNN:HW": 0,
+            "MLP:HW": 462,
+            "MLP:ID": ">3000",
+            "CNN:HW": 8,
+            "CNN:ID": 13,
         },
     }[_dataset]
     _results = {
