@@ -74,6 +74,7 @@ def best_model_runs(_path: str):
     #     ax.set_yscale('log')
     
     for _k in _results.keys():
+        print(_results[_k])
         _failed_percent = _results[_k]["failed"] / _results[_k]["total"]
         _nt_attack = _results[_k]["nt_attack"]
         _failed = _failed_percent > 0
