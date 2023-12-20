@@ -80,7 +80,7 @@ def best_model_runs(_path: str):
         _failed = _failed_percent > 0
         _color = "red" if _failed else "blue"
         _fontsize = 8
-        _offset = _fontsize + 2
+        _offset = _fontsize*2 + 2
         for _i, _msg in enumerate([
             f"failed: {_failed_percent:.2f}%",
             f"min: {min(_nt_attack)}",
