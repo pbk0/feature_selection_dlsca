@@ -48,8 +48,8 @@ def best_model_runs(_path: str):
         _total_experiments += 1
         _data = np.load(_npz, allow_pickle=True)["npz_dict"][()]
         _nt_attack = _data["nt_attack"]
-        if _nt_attack >= 1000:
-            _nt_attack = np.inf
+        # if _nt_attack >= 1000:
+        #     _nt_attack = np.inf
         _results[_model_type][_lk_model].append(
             _nt_attack
         )
@@ -69,12 +69,12 @@ def best_model_runs(_path: str):
     # violin plot
     _catplot = sns.swarmplot(
         data=_df,
-        alpha=0.5, s=4,
+        alpha=0.5, s=2,
     )
     # for ax in _catplot.fig.axes:
     #     ax.set_yscale('log')
     _catplot.text(
-        "MLP:ID", 1.75, "Custom text",
+        "MLP:ID", 3100, "Custom text",
             fontsize=8,  # Size
             fontstyle="oblique",  # Style
             color="red",  # Color
