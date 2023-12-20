@@ -34,32 +34,31 @@ def print_best_hp(_path: str):
     
 
 def best_model_runs(_path: str):
-    _total_experiments = 0
     _results = {
-        "mlp": {"ID": [], "HW": []},
-        "cnn": {"ID": [], "HW": []},
+        "MLP:ID": {"nt_attack": [], "failed": 0, "total": 0},
+        "MLP:HW": {"nt_attack": [], "failed": 0, "total": 0},
+        "CNN:ID": {"nt_attack": [], "failed": 0, "total": 0},
+        "CNN:HW": {"nt_attack": [], "failed": 0, "total": 0},
     }
     for _npz in pathlib.Path(_path).glob("*"):
         if not _npz.name.endswith(".npz"):
             continue
         _tokens = _npz.name.split("_")
-        _model_type = _tokens[0]
-        _lk_model = _tokens[1]
-        _total_experiments += 1
+        _key = f"{_tokens[0].upper()}:{_tokens[1]}"
         _data = np.load(_npz, allow_pickle=True)["npz_dict"][()]
         _nt_attack = _data["nt_attack"]
-        # if _nt_attack >= 1000:
-        #     _nt_attack = np.inf
-        _results[_model_type][_lk_model].append(
-            _nt_attack
-        )
+        _results[_key]["nt_attack"].append(_nt_attack)
+        if _nt_attack >= 0:
+            _results[_key]["failed"] += 1
+        _results[_key]["total"] += 1
         
     # make dataframe
     _df = pd.DataFrame()
-    _df["MLP:ID"] = _results["mlp"]["ID"]
-    _df["MLP:HW"] = _results["mlp"]["HW"]
-    _df["CNN:ID"] = _results["cnn"]["ID"]
-    _df["CNN:HW"] = _results["cnn"]["HW"]
+    _df["MLP:ID"] = _results["MLP:ID"]
+    _df["MLP:HW"] = _results["MLP:HW"]
+    _df["CNN:ID"] = _results["CNN:ID"]
+    _df["CNN:HW"] = _results["CNN:HW"]
+    _df[_df >= 1000] = np.inf
     
     # customizing runtime configuration stored
     # in matplotlib.rcParams
@@ -73,14 +72,27 @@ def best_model_runs(_path: str):
     )
     # for ax in _catplot.fig.axes:
     #     ax.set_yscale('log')
-    _catplot.text(
-        "MLP:ID", 3100, "Custom text",
-            fontsize=8,  # Size
-            fontstyle="oblique",  # Style
-            color="red",  # Color
-            ha="center",  # Horizontal alignment
-            va="center",  # Vertical alignment
-    )
+    
+    for _k in _results.keys():
+        _failed_percent = _results[_k]["failed"] / _results[_k]["total"]
+        _nt_attack = _results[_k]["nt_attack"]
+        _failed = _failed_percent > 0
+        _color = "red" if _failed else "blue"
+        _fontsize = 8
+        _offset = _fontsize + 2
+        for _i, _msg in enumerate([
+            f"failed: {_failed_percent:.2f}%",
+            f"min: {min(_nt_attack)}",
+            f"max: {'NA' if _failed else max(_nt_attack)}",
+        ]):
+            _catplot.text(
+                _k, 1000 + (_i+1)*_offset, _msg,
+                    fontsize=_fontsize,  # Size
+                    fontstyle="oblique",  # Style
+                    color=_color,  # Color
+                    ha="center",  # Horizontal alignment
+                    va="center",  # Vertical alignment
+            )
     
     fig1 = plt.figure()
     plt.plot([17, 45, 7, 8, 7], color='orange')
