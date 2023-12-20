@@ -47,6 +47,7 @@ def best_model_runs(_exp_type: str):
         ]:
             _fig = best_model_runs_for_dataset(_dataset=_ds, _exp_type=_exp_type)
             _pdf.savefig(figure=_fig, dpi=300)
+            _fig.clear()
     
     subprocess.run(["xdg-open", _pdf_file.absolute().resolve().as_posix()])
     
