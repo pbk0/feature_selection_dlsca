@@ -3,14 +3,14 @@ import tensorflow as tf
 tf.config.threading.set_intra_op_parallelism_threads(2)
 tf.config.threading.set_inter_op_parallelism_threads(1)
 
+import pathlib
 import os
 import sys
 import time
 import glob
 import numpy as np
 
-# sys.path.append('/project_root_folder')
-import pathlib
+# put root project folder path here:
 sys.path.append(pathlib.Path(__file__).parent.parent.parent.resolve().as_posix())
 
 os.environ["OMP_NUM_THREADS"] = '2'  # export OMP_NUM_THREADS=4
@@ -19,21 +19,20 @@ os.environ["MKL_NUM_THREADS"] = '2'  # export MKL_NUM_THREADS=6
 
 import importlib
 
-
 from src.random_models.random_mlp import *
 from src.random_models.random_cnn import *
-from src.datasets.ReadASCADr import ReadASCADr
+from src.datasets.ReadASCADf import ReadASCADf
 from src.datasets.dataset_parameters import *
 from src.sca_metrics.sca_metrics import sca_metrics
 from experiments.paths import *
 
 
-def dataset_name(fs_type, num_poi, resampling_window=20):
+def dataset_name(fs_type, num_poi, resampling_window=10):
     dataset_name = {
-        "RPOI": f"ascad-variable_{num_poi}poi.h5",
-        "OPOI": "ascad-variable.h5",
-        "NOPOI": f"ascad-variable_nopoi_window_{resampling_window}.h5",
-        "NOPOI_DESYNC": f"ascad-variable_nopoi_window_{resampling_window}_desync.h5"
+        "RPOI": f"ASCAD_{num_poi}poi.h5",
+        "OPOI": "ASCAD.h5",
+        "NOPOI": f"ASCAD_nopoi_window_{resampling_window}.h5",
+        "NOPOI_DESYNC": f"ASCAD_nopoi_window_{resampling_window}_desync.h5"
     }
 
     return dataset_name[fs_type]
@@ -49,17 +48,17 @@ if __name__ == "__main__":
     random_model_seed = int(sys.argv[7])
 
     if feature_selection_type == "RPOI":
-        dataset_folder = dataset_folder_ascadr_rpoi
-        save_folder = results_folder_ascadr_rpoi
+        dataset_folder = dataset_folder_ascadf_rpoi
+        save_folder = results_folder_ascadf_rpoi
     elif feature_selection_type == "OPOI":
-        dataset_folder = dataset_folder_ascadr_opoi
-        save_folder = results_folder_ascadr_opoi
+        dataset_folder = dataset_folder_ascadf_opoi
+        save_folder = results_folder_ascadf_opoi
     elif feature_selection_type == "NOPOI":
-        dataset_folder = dataset_folder_ascadr_nopoi
-        save_folder = results_folder_ascadr_nopoi
+        dataset_folder = dataset_folder_ascadf_nopoi
+        save_folder = results_folder_ascadf_nopoi
     elif feature_selection_type == "NOPOI_DESYNC":
-        dataset_folder = dataset_folder_ascadr_nopoi_desync
-        save_folder = results_folder_ascadr_nopoi_desync
+        dataset_folder = dataset_folder_ascadf_nopoi_desync
+        save_folder = results_folder_ascadf_nopoi_desync
     else:
         dataset_folder = None
         save_folder = None
@@ -73,15 +72,15 @@ if __name__ == "__main__":
     first_sample = 0
     target_byte = 2
     epochs = 100
-    ascadr_parameters = ascadr
-    n_profiling = ascadr_parameters["n_profiling"]
-    n_attack = ascadr_parameters["n_attack"]
-    n_validation = ascadr_parameters["n_validation"]
-    n_attack_ge = ascadr_parameters["n_attack_ge"]
-    n_validation_ge = ascadr_parameters["n_validation_ge"]
+    ascadf_parameters = ascadf
+    n_profiling = ascadf_parameters["n_profiling"]
+    n_attack = ascadf_parameters["n_attack"]
+    n_validation = ascadf_parameters["n_validation"]
+    n_attack_ge = ascadf_parameters["n_attack_ge"]
+    n_validation_ge = ascadf_parameters["n_validation_ge"]
 
     """ Create dataset for ASCADf """
-    ascad_dataset = ReadASCADr(
+    ascad_dataset = ReadASCADf(
         n_profiling,
         n_attack,
         n_validation,
@@ -142,4 +141,5 @@ if __name__ == "__main__":
                 "val_loss": val_loss, "params": model.count_params()}
 
     """ Save npz file with results """
-    np.savez(f"{save_folder}/orig/test_5_random_models/{model_name}_{leakage_model}_{npoi}_{run_id}_{random_model_seed}.npz", npz_dict=npz_dict)
+    np.savez(f"{save_folder}/orig/test_50_random_models/{model_name}_{leakage_model}_{npoi}_{run_id}_{random_model_seed}.npz", npz_dict=npz_dict)
+
