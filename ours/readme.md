@@ -1,5 +1,9 @@
 
 
+Note that results are provided in `feature_selection_dlsca\_results.tar.gz`. Just extract it using `tar -zxvf _results.tar.gz`
+
+In case you want to reproduce results follow the instructions below to generate the results in `feature_selection_dlsca\_results` directory.
+
 # Clone the fork
 
 ```bash
