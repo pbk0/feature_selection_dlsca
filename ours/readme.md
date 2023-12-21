@@ -134,7 +134,7 @@ cd _results
 find . -name "*.pdf" -type f
 find . -name "*.pdf" -type f -delete
 cd ..
-python ours/results_analyze.py bmr orig
+python ours/results_analyze.py best_model_runs orig
 ```
 
 
@@ -143,9 +143,9 @@ python ours/results_analyze.py bmr orig
 We get some five random models per case and call it 100 times
 
 ```bash
-mkdir -p _results/ASCADf/opoi/orig/test_50_random_models/
-mkdir -p _results/ASCADr/opoi/orig/test_50_random_models/
-mkdir -p _results/CHESCTF/opoi/orig/test_50_random_models/
+mkdir -p _results/ASCADf/opoi/orig/test_fifty_random_models/
+mkdir -p _results/ASCADr/opoi/orig/test_fifty_random_models/
+mkdir -p _results/CHESCTF/opoi/orig/test_fifty_random_models/
 for n in {1..10}; 
 do
   for lk in ID HW;
@@ -154,9 +154,9 @@ do
     do
       for rs in {1..50};
       do
-        bsub -oo "_results/ASCADf/opoi/orig/test_50_random_models/${nn}_${lk}_700_${n}_${rs}.log" python experiments/ASCADf/test_50_random_models.py ${lk} ${nn} OPOI 700 0 ${n} ${rs}
-        bsub -oo "_results/ASCADr/opoi/orig/test_50_random_models/${nn}_${lk}_700_${n}_${rs}.log" python experiments/ASCADr/test_50_random_models.py ${lk} ${nn} OPOI 1400 0 ${n} ${rs}
-        bsub -oo "_results/CHESCTF/opoi/orig/test_50_random_models/${nn}_${lk}_700_${n}_${rs}.log" python experiments/CHESCTF/test_50_random_models.py ${lk} ${nn} OPOI 4000 0 ${n} ${rs}
+        bsub -oo "_results/ASCADf/opoi/orig/test_fifty_random_models/${nn}_${lk}_700_${n}_${rs}.log" python experiments/ASCADf/test_fifty_random_models.py ${lk} ${nn} OPOI 700 0 ${n} ${rs}
+        bsub -oo "_results/ASCADr/opoi/orig/test_fifty_random_models/${nn}_${lk}_700_${n}_${rs}.log" python experiments/ASCADr/test_fifty_random_models.py ${lk} ${nn} OPOI 1400 0 ${n} ${rs}
+        bsub -oo "_results/CHESCTF/opoi/orig/test_fifty_random_models/${nn}_${lk}_700_${n}_${rs}.log" python experiments/CHESCTF/test_fifty_random_models.py ${lk} ${nn} OPOI 4000 0 ${n} ${rs}
       done
     done
   done
@@ -166,7 +166,7 @@ cd _results
 find . -name "*.pdf" -type f
 find . -name "*.pdf" -type f -delete
 cd ..
-python ours/results_analyze.py t50rmr orig
+python ours/results_analyze.py fifty_random_model_runs orig
 ```
 
 
