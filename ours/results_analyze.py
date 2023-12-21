@@ -156,7 +156,7 @@ def main():
     if _mode == "print_best_hp":
         print_best_hp(_path=sys.argv[2])
     elif _mode in [
-        "best_model_runs", "fifty_random_model_runs",
+        "best_model_runs",
     ]:
         test_runs(_exp_type=sys.argv[2], _mode=_mode, )
     else:
