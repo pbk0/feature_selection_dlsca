@@ -66,9 +66,17 @@ def test_runs(_exp_type: str, _mode: str, ):
         for _ds in [
             "ASCADf", "ASCADr", "CHESCTF"
         ]:
+            # plt.rcParams['text.usetex'] = True
             _fig = test_runs_for_dataset(_dataset=_ds, _exp_type=_exp_type, _mode=_mode)
             _pdf.savefig(figure=_fig, dpi=300)
             _fig.clear()
+            
+            # We can also set the file's metadata via the PdfPages object:
+            # d = _pdf.infodict()
+            # d['Title'] = 'Multipage PDF Example'
+            # d['Author'] = 'Jouni K. Sepp\xe4nen'
+            # d['Subject'] = 'How to create a multipage pdf file and set its metadata'
+            # d['Keywords'] = 'PdfPages multipage keywords author title subject'
     
     subprocess.run(["xdg-open", _pdf_file.absolute().resolve().as_posix()])
     
