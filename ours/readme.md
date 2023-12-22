@@ -58,10 +58,10 @@ curl https://zenodo.org/record/3733418/files/PinataAcqTask2.2_10k_upload.trs --o
 curl https://zenodo.org/record/3733418/files/PinataAcqTask2.3_10k_upload.trs --output _traces\PinataAcqTask2.3_10k_upload.trs
 curl https://zenodo.org/record/3733418/files/PinataAcqTask2.4_10k_upload.trs --output _traces\PinataAcqTask2.4_10k_upload.trs
 
-copy E:\scandal\dnd\Download\sca.reassure_masked_aes\DnA\file _traces\PinataAcqTask2.1_10k_upload.trs
-copy E:\scandal\dnd\Download\sca.reassure_masked_aes\DnB\file _traces\PinataAcqTask2.2_10k_upload.trs
-copy E:\scandal\dnd\Download\sca.reassure_masked_aes\DnC_vk\file _traces\PinataAcqTask2.3_10k_upload.trs
-copy E:\scandal\dnd\Download\sca.reassure_masked_aes\DnC_fk\file _traces\PinataAcqTask2.4_10k_upload.trs
+copy D:\dnd\Download\sca.reassure_masked_aes\DnA\file _traces\PinataAcqTask2.1_10k_upload.trs
+copy D:\dnd\Download\sca.reassure_masked_aes\DnB\file _traces\PinataAcqTask2.2_10k_upload.trs
+copy D:\dnd\Download\sca.reassure_masked_aes\DnC_vk\file _traces\PinataAcqTask2.3_10k_upload.trs
+copy D:\dnd\Download\sca.reassure_masked_aes\DnC_fk\file _traces\PinataAcqTask2.4_10k_upload.trs
 
 mkdir _datasets/CHESCTF/ches_ctf_nopoi
 mkdir _datasets/CHESCTF/ches_ctf_opoi
