@@ -77,10 +77,16 @@ def load_trs_trace(filename, number_of_traces, number_of_samples, data_length, n
             samples[i] = winres(trace_tmp, window=window)
         else:
             samples[i] = trace[sample_offset:sample_offset + number_of_samples]
-
-        plaintexts[i] = np.frombuffer(trace.data, dtype=np.uint8, count=data_length)[:16]
-        ciphertexts[i] = np.frombuffer(trace.data, dtype=np.uint8, count=data_length)[16:32]
-        keys[i] = np.frombuffer(trace.data, dtype=np.uint8, count=data_length)[32:]
+        
+        # fetch data
+        _data = np.frombuffer(
+            # trace.data,
+            trace.parameters['LEGACY_DATA'].value,
+            dtype=np.uint8, count=data_length
+        )
+        plaintexts[i] = _data[:16]
+        ciphertexts[i] = _data[16:32]
+        keys[i] = _data[32:]
         print(f"trace: {i} - plaintext: {plaintexts[i]} - ciphertext: {ciphertexts[i]} - key: {keys[i]}")
 
     return samples, plaintexts, ciphertexts, keys

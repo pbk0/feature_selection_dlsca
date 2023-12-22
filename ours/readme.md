@@ -16,8 +16,6 @@ cd feature_selection_dlsca/
 
 We are only interested in OPOI
 
-Note to install `pip install trsfile==0.3.2`
-
 First lets make two dirs
 
 ```pwsh
