@@ -30,7 +30,6 @@ Each raw trace contains information from the full AES encryption, including an i
 Each raw trace contains 650,000 sample points. 
 
 """
-np.convolve()
 
 @njit
 def winres(trace, window=20, overlap=0.5):
