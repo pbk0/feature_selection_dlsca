@@ -30,7 +30,7 @@ Each raw trace contains information from the full AES encryption, including an i
 Each raw trace contains 650,000 sample points. 
 
 """
-
+np.convolve()
 
 @njit
 def winres(trace, window=20, overlap=0.5):
@@ -50,10 +50,11 @@ def load_trs_trace(filename, number_of_traces, number_of_samples, data_length, n
     keys = np.zeros((number_of_traces, 16), dtype=np.uint8)
 
     """ The second file contains traces shifted by 800 samples in acquisition phase """
-    if filename == f"{raw_trace_folder_chesctf}/PinataAcqTask2.2_10k_upload.trs":
-        sample_offset = 800
-    else:
-        sample_offset = 0
+    # removing in favour of this issue
+    # if filename == f"{raw_trace_folder_chesctf}/PinataAcqTask2.2_10k_upload.trs":
+    #     sample_offset = 800
+    # else:
+    #     sample_offset = 0
 
     trace_file = trsfile.open(filename)
     for i, trace in enumerate(trace_file[:number_of_traces]):
@@ -61,7 +62,7 @@ def load_trs_trace(filename, number_of_traces, number_of_samples, data_length, n
         if number_of_samples_resampled is not None:
 
             if desync:
-                trace_tmp = abs(trace[sample_offset:sample_offset + number_of_samples])
+                trace_tmp = trace[:number_of_samples]
                 trace_tmp_shifted = np.zeros(number_of_samples)
                 shift = random.randint(-50, 50)
                 if shift > 0:
@@ -72,11 +73,11 @@ def load_trs_trace(filename, number_of_traces, number_of_samples, data_length, n
                     trace_tmp_shifted[abs(shift):number_of_samples] = trace_tmp[0:number_of_samples - abs(shift)]
                 trace_tmp = trace_tmp_shifted
             else:
-                trace_tmp = abs(trace[sample_offset:sample_offset + number_of_samples])
+                trace_tmp = trace[:number_of_samples]
 
             samples[i] = winres(trace_tmp, window=window)
         else:
-            samples[i] = trace[sample_offset:sample_offset + number_of_samples]
+            samples[i] = trace[:number_of_samples]
         
         # fetch data
         _data = np.frombuffer(
