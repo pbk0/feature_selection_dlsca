@@ -31,8 +31,8 @@ mkdir _results
 curl https://www.data.gouv.fr/s/resources/ascad/20180530-163000/ASCAD_data.zip --output _traces\ASCAD_data.zip
 copy D:\dnd\Download\sca.ascad_v1_full\DnFk\file _traces\ASCAD_data.zip
 Expand-Archive -Path _traces\ASCAD_data.zip -DestinationPath _traces
-mkdir _datasets\ASCADf\ASCAD_opoi
-copy _traces\ASCAD_data\ASCAD_databases\ASCAD.h5 _datasets\ASCADf\ASCAD_opoi
+mkdir _datasets\ASCADf\opoi
+copy _traces\ASCAD_data\ASCAD_databases\ASCAD.h5 _datasets\ASCADf\opoi
 rm -r -fo _traces\ASCAD_data
 ```
 
@@ -42,8 +42,8 @@ rm -r -fo _traces\ASCAD_data
 ```pwsh
 curl https://static.data.gouv.fr/resources/ascad-atmega-8515-variable-key/20190903-083349/ascad-variable.h5 --output _traces\ascad-variable.h5
 copy D:\dnd\Download\sca.ascad_v1\DnVk_000\file _traces\ascad-variable.h5
-mkdir _datasets\ASCADr\ascad-variable_opoi
-copy _traces\ascad-variable.h5 _datasets\ASCADr\ascad-variable_opoi
+mkdir _datasets\ASCADr\opoi
+copy _traces\ascad-variable.h5 _datasets\ASCADr\opoi
 ```
 
 
@@ -61,11 +61,11 @@ copy D:\dnd\Download\sca.reassure_masked_aes\DnB\file _traces\PinataAcqTask2.2_1
 copy D:\dnd\Download\sca.reassure_masked_aes\DnC_vk\file _traces\PinataAcqTask2.3_10k_upload.trs
 copy D:\dnd\Download\sca.reassure_masked_aes\DnC_fk\file _traces\PinataAcqTask2.4_10k_upload.trs
 
-mkdir _datasets/CHESCTF/ches_ctf_nopoi
-mkdir _datasets/CHESCTF/ches_ctf_opoi
+mkdir _datasets/CHESCTF/nopoi
+mkdir _datasets/CHESCTF/opoi
 python experiments\CHESCTF\generate_dataset.py
 
-rm -r -fo _datasets/CHESCTF/ches_ctf_nopoi
+rm -r -fo _datasets/CHESCTF/nopoi
 ```
 
 
@@ -82,7 +82,7 @@ curl https://zenodo.org/record/7885814/files/Ascad_v2_dataset_extracted.h5 --out
 
 copy D:\dnd\Download\sca.ascad_v2_mo\Dn\file _traces\Ascad_v2_dataset_extracted.h5
 
-mkdir _datasets\ASCADV2\ascadv2_opoi
+mkdir _datasets\ASCADV2\opoi
 python experiments\ASCADV2\generate_dataset.py
 ```
 
@@ -103,9 +103,11 @@ for ($i = 0; $i -lt 16; $i++)
 }
 copy "D:\dnd\Download\sca.dpa_v42\Dn\index" "_traces\dpav4_2_index"
 
-mkdir _datasets/DPAV42/dpav42_nopoi
-mkdir _datasets/DPAV42/dpav42_opoi
+mkdir _datasets/DPAV42/nopoi
+mkdir _datasets/DPAV42/opoi
 python experiments\DPAV42\generate_dataset.py
+
+rm -r -fo _datasets/DPAV42/nopoi
 ```
 
 
