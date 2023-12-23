@@ -127,9 +127,9 @@ do
   do 
     for nn in mlp cnn;
     do
-      bsub -oo "_results/ASCADf/opoi/orig/test_best_models/${nn}_${lk}_700_${n}.log" python experiments/ASCADf/test_best_models.py ${lk} ${nn} OPOI 700 0 ${n}
-      bsub -oo "_results/ASCADr/opoi/orig/test_best_models/${nn}_${lk}_700_${n}.log" python experiments/ASCADr/test_best_models.py ${lk} ${nn} OPOI 1400 0 ${n}
-      bsub -oo "_results/CHESCTF/opoi/orig/test_best_models/${nn}_${lk}_700_${n}.log" python experiments/CHESCTF/test_best_models.py ${lk} ${nn} OPOI 4000 0 ${n}
+      bsub -oo "_results/ASCADf/opoi/orig/best_model_runs/${nn}_${lk}_700_${n}.log" python experiments/ASCADf/test_best_models.py ${lk} ${nn} OPOI 700 0 ${n}
+      bsub -oo "_results/ASCADr/opoi/orig/best_model_runs/${nn}_${lk}_700_${n}.log" python experiments/ASCADr/test_best_models.py ${lk} ${nn} OPOI 1400 0 ${n}
+      bsub -oo "_results/CHESCTF/opoi/orig/best_model_runs/${nn}_${lk}_700_${n}.log" python experiments/CHESCTF/test_best_models.py ${lk} ${nn} OPOI 4000 0 ${n}
     done
   done
 done
