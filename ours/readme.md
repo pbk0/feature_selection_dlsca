@@ -125,7 +125,7 @@ mkdir -p _results/ASCADf/opoi/es/best_model_runs/
 mkdir -p _results/ASCADr/opoi/es/best_model_runs/
 mkdir -p _results/CHESCTF/opoi/es/best_model_runs/
 
-for n in {1..2}; 
+for n in {1..100}; 
 do
   for lk in ID HW;
   do
