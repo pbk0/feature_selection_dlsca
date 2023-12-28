@@ -103,7 +103,7 @@ if __name__ == "__main__":
         _es_callback = EarlyStopping(
             monitor='val_loss',
             min_delta=0.,
-            start_from_epoch=10,
+            start_from_epoch=0,
             patience=200,
             verbose=1,
             restore_best_weights=True,
