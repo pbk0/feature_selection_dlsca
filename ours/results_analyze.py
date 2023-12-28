@@ -99,6 +99,8 @@ def test_runs_for_dataset_acc_nd_loss(_dataset: str, _exp_type: str, _mode: str,
         "val_loss": [],
         "train_acc": [],
         "val_acc": [],
+        "failed": 0,
+        "total": 0,
     }
     if _exp_type == "es":
         _results["best_epoch"] = []
@@ -115,6 +117,9 @@ def test_runs_for_dataset_acc_nd_loss(_dataset: str, _exp_type: str, _mode: str,
         _results["val_loss"].append(_data["val_loss"])
         _results["train_acc"].append(_data["accuracy"])
         _results["val_acc"].append(_data["val_accuracy"])
+        if _data["nt_attack"] >= 3000:
+            _results["failed"] += 1
+        _results["total"] += 1
         if _exp_type == "es":
             _results["best_epoch"].append(_data["best_epoch"])
     
@@ -160,10 +165,11 @@ def test_runs_for_dataset_acc_nd_loss(_dataset: str, _exp_type: str, _mode: str,
     _axs[1].set_ylabel('accuracy')
     
     # Overall title for the figure
+    _failed_percent = (_results["failed"] / _results["total"]) * 100
     if _exp_type == "es":
-        plt.suptitle(f"{_dataset} | {_model_type} | ES@{_results['best_epoch'][_median_index]}")
+        plt.suptitle(f"{_dataset} | {_model_type} | ES@{_results['best_epoch'][_median_index]} | (failed: {_failed_percent:.2f}%)")
     else:
-        plt.suptitle(f"{_dataset} | {_model_type}")
+        plt.suptitle(f"{_dataset} | {_model_type} | (failed: {_failed_percent:.2f}%)")
     
     # Adjust the layout
     plt.tight_layout(rect=(0., 0.03, 1., 0.95))
