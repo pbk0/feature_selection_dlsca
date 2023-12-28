@@ -148,6 +148,9 @@ if __name__ == "__main__":
                 "ge_validation": ge_validation, "sr_validation": sr_validation, "nt_validation": nt_validation, "ge_attack": ge_attack,
                 "sr_attack": sr_attack, "nt_attack": nt_attack, "accuracy": accuracy, "val_accuracy": val_accuracy, "loss": loss,
                 "val_loss": val_loss, "params": model.count_params()}
+    if experiment_type == "es":
+        # noinspection PyUnboundLocalVariable
+        npz_dict["best_epoch"] = _es_callback.best_epoch
 
     """ Save npz file with results """
     np.savez(f"{save_folder}/orig/test_best_models/{model_name}_{leakage_model}_{npoi}_{run_id}.npz", npz_dict=npz_dict)
