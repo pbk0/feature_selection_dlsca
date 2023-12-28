@@ -162,7 +162,7 @@ def test_runs_for_dataset_acc_nd_loss(_dataset: str, _exp_type: str, _mode: str,
     
     # Overall title for the figure
     if _exp_type == "es":
-        plt.suptitle(f"{_dataset} | {_model_type} | best_epoch={_results['best_epoch for median'][_median_index]}")
+        plt.suptitle(f"{_dataset} | {_model_type} | ES@{_results['best_epoch'][_median_index]}")
     else:
         plt.suptitle(f"{_dataset} | {_model_type}")
     
