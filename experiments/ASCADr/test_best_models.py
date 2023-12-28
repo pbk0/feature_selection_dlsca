@@ -104,7 +104,7 @@ if __name__ == "__main__":
             monitor='val_loss',
             min_delta=0.,
             start_from_epoch=10,
-            patience=5,
+            patience=200,
             verbose=1,
             restore_best_weights=True,
         )
