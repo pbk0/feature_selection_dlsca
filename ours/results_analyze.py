@@ -62,14 +62,25 @@ def test_runs(_exp_type: str, _mode: str, ):
     _pdf_file = pathlib.Path(f"_results/opoi_{_exp_type}_{_mode}.pdf")
     _pdf_file.unlink(missing_ok=True)
     
+    # plt.rcParams['text.usetex'] = True
+    
     with PdfPages(_pdf_file) as _pdf:
         for _ds in [
             "ASCADf", "ASCADr", "CHESCTF"
         ]:
-            # plt.rcParams['text.usetex'] = True
-            _fig = test_runs_for_dataset(_dataset=_ds, _exp_type=_exp_type, _mode=_mode)
+            # for rank
+            _fig = test_runs_for_dataset_rank(_dataset=_ds, _exp_type=_exp_type, _mode=_mode)
             _pdf.savefig(figure=_fig, dpi=300)
             _fig.clear()
+            
+            # loop over each model type
+            for _model_type in [
+                "MLP:HW", "MLP:ID", "CNN:HW", "CNN:ID",
+            ]:
+                # for acc
+                _fig = test_runs_for_dataset_acc_nd_loss(_dataset=_ds, _exp_type=_exp_type, _mode=_mode, _model_type=_model_type)
+                _pdf.savefig(figure=_fig, dpi=300)
+                _fig.clear()
             
             # We can also set the file's metadata via the PdfPages object:
             # d = _pdf.infodict()
@@ -81,7 +92,81 @@ def test_runs(_exp_type: str, _mode: str, ):
     subprocess.run(["xdg-open", _pdf_file.absolute().resolve().as_posix()])
     
 
-def test_runs_for_dataset(_dataset: str, _exp_type: str, _mode: str, ) -> plt.Figure:
+def test_runs_for_dataset_acc_nd_loss(_dataset: str, _exp_type: str, _mode: str, _model_type: str) -> plt.Figure:
+    
+    _results = {
+        "nt_attack": [],
+        "train_loss": [],
+        "val_loss": [],
+        "train_acc": [],
+        "val_acc": [],
+    }
+
+    for _npz in pathlib.Path(f"_results/{_dataset}/opoi/{_exp_type}/{_mode}").glob("*"):
+        if not _npz.name.endswith(".npz"):
+            continue
+        _tokens = _npz.name.split("_")
+        if _model_type != f"{_tokens[0].upper()}:{_tokens[1]}":
+            continue
+        _data = np.load(_npz, allow_pickle=True)["npz_dict"][()]
+        _results["nt_attack"].append(_data["nt_attack"])
+        _results["train_loss"].append(_data["loss"])
+        _results["val_loss"].append(_data["val_loss"])
+        _results["train_acc"].append(_data["accuracy"])
+        _results["val_acc"].append(_data["val_accuracy"])
+    
+    # compute median and get the index of experiment
+    if len(_results["nt_attack"]) % 2 == 0:
+        # keeps the array with odd length so that the median is one of the results
+        _median = np.median(_results["nt_attack"][:-1])
+    else:
+        _median = np.median(_results["nt_attack"])
+    _median_index = np.where(np.asarray(_results["nt_attack"]) == int(_median))[0][0]
+    
+    # Create a figure with two subplots
+    _fig, _axs = plt.subplots(nrows=1, ncols=2, figsize=(15, 6))
+    
+    # Plot the first set of time series on the first subplot
+    for _i, _data in enumerate(_results["train_loss"]):
+        if _i == _median_index:
+            sns.lineplot(data=_data, ax=_axs[0], color='green', linewidth=1.5, alpha=1.0)
+        else:
+            sns.lineplot(data=_data, ax=_axs[0], color='green', linewidth=0.5, alpha=0.1)
+    for _i, _data in enumerate(_results["val_loss"]):
+        if _i == _median_index:
+            sns.lineplot(data=_data, ax=_axs[0], color='blue', linewidth=1.5, alpha=1.0)
+        else:
+            sns.lineplot(data=_data, ax=_axs[0], color='blue', linewidth=0.5, alpha=0.1)
+    _axs[0].set_title('Loss')
+    _axs[0].set_xlabel('epoch')
+    _axs[0].set_ylabel('loss')
+    
+    # Plot the second set of time series on the second subplot
+    for _i, _data in enumerate(_results["train_acc"]):
+        if _i == _median_index:
+            sns.lineplot(data=_data, ax=_axs[1], color='green', linewidth=1.5, alpha=1.0)
+        else:
+            sns.lineplot(data=_data, ax=_axs[1], color='green', linewidth=0.5, alpha=0.1)
+    for _i, _data in enumerate(_results["val_acc"]):
+        if _i == _median_index:
+            sns.lineplot(data=_data, ax=_axs[1], color='blue', linewidth=1.5, alpha=1.0)
+        else:
+            sns.lineplot(data=_data, ax=_axs[1], color='blue', linewidth=0.5, alpha=0.1)
+    _axs[1].set_title('Accuracy')
+    _axs[1].set_xlabel('epoch')
+    _axs[1].set_ylabel('accuracy')
+    
+    # Overall title for the figure
+    plt.suptitle(f"{_dataset} | {_model_type}")
+    
+    # Adjust the layout
+    plt.tight_layout(rect=(0., 0.03, 1., 0.95))
+    
+    # return
+    return _fig
+    
+
+def test_runs_for_dataset_rank(_dataset: str, _exp_type: str, _mode: str, ) -> plt.Figure:
     _reported = _REPORTED[_dataset]
     _results = {
         "MLP:ID": {"nt_attack": [], "failed": 0, "total": 0},
@@ -132,7 +217,7 @@ def test_runs_for_dataset(_dataset: str, _exp_type: str, _mode: str, ) -> plt.Fi
         _nt_attack = _results[_k]["nt_attack"]
         _failed = _failed_percent > 0
         _color = "red" if _failed else "blue"
-        _median = int(np.median(_nt_attack))
+        _median = np.median(_nt_attack)
         if _median >= 3000:
             _median = ">3000"
         _min = min(_nt_attack)
