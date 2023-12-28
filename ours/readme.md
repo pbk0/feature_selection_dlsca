@@ -118,9 +118,12 @@ rm -r -fo _datasets/DPAV42/nopoi
 We call the best models 100 times to get statistic for number of traces needed for attack ...
 
 ```bash
-mkdir -p _results/ASCADf/opoi/orig/test_best_models/
-mkdir -p _results/ASCADr/opoi/orig/test_best_models/
-mkdir -p _results/CHESCTF/opoi/orig/test_best_models/
+mkdir -p _results/ASCADf/opoi/orig/best_model_runs/
+mkdir -p _results/ASCADr/opoi/orig/best_model_runs/
+mkdir -p _results/CHESCTF/opoi/orig/best_model_runs/
+mkdir -p _results/ASCADf/opoi/es/best_model_runs/
+mkdir -p _results/ASCADr/opoi/es/best_model_runs/
+mkdir -p _results/CHESCTF/opoi/es/best_model_runs/
 
 for n in {1..100}; 
 do
@@ -128,7 +131,7 @@ do
   do
     for nn in mlp cnn;
     do 
-      for et in orig es:
+      for et in orig es;
       do
         bsub -oo "_results/ASCADf/opoi/${et}/best_model_runs/${nn}_${lk}_700_${n}.log" python experiments/ASCADf/test_best_models.py ${lk} ${nn} OPOI 700 0 ${et} ${n}
         bsub -oo "_results/ASCADr/opoi/${et}/best_model_runs/${nn}_${lk}_700_${n}.log" python experiments/ASCADr/test_best_models.py ${lk} ${nn} OPOI 1400 0 ${et} ${n}
