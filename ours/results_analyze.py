@@ -101,6 +101,8 @@ def test_runs_for_dataset_acc_nd_loss(_dataset: str, _exp_type: str, _mode: str,
         "train_acc": [],
         "val_acc": [],
     }
+    if _exp_type == "es":
+        _results["best_epoch"] = []
 
     for _npz in pathlib.Path(f"_results/{_dataset}/opoi/{_exp_type}/{_mode}").glob("*"):
         if not _npz.name.endswith(".npz"):
@@ -114,6 +116,8 @@ def test_runs_for_dataset_acc_nd_loss(_dataset: str, _exp_type: str, _mode: str,
         _results["val_loss"].append(_data["val_loss"])
         _results["train_acc"].append(_data["accuracy"])
         _results["val_acc"].append(_data["val_accuracy"])
+        if _exp_type == "es":
+            _results["best_epoch"].append(_data["best_epoch"])
     
     # compute median and get the index of experiment
     if len(_results["nt_attack"]) % 2 == 0:
@@ -157,7 +161,10 @@ def test_runs_for_dataset_acc_nd_loss(_dataset: str, _exp_type: str, _mode: str,
     _axs[1].set_ylabel('accuracy')
     
     # Overall title for the figure
-    plt.suptitle(f"{_dataset} | {_model_type}")
+    if _exp_type == "es":
+        plt.suptitle(f"{_dataset} | {_model_type} | best_epoch={_results['best_epoch for median'][_median_index]}")
+    else:
+        plt.suptitle(f"{_dataset} | {_model_type}")
     
     # Adjust the layout
     plt.tight_layout(rect=(0., 0.03, 1., 0.95))
