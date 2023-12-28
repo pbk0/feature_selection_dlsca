@@ -22,6 +22,7 @@ import importlib
 from src.datasets.ReadCHESCTF import ReadCHESCTF
 from src.datasets.dataset_parameters import *
 from src.sca_metrics.sca_metrics import sca_metrics
+from src.callback import EarlyStopping
 from experiments.paths import *
 
 
@@ -42,7 +43,8 @@ if __name__ == "__main__":
     feature_selection_type = sys.argv[3]
     npoi = int(sys.argv[4])
     window = int(sys.argv[5])
-    run_id = int(sys.argv[6])
+    experiment_type = sys.argv[6]
+    run_id = int(sys.argv[7])
 
     if feature_selection_type == "OPOI":
         dataset_folder = dataset_folder_chesctf_opoi
@@ -90,6 +92,21 @@ if __name__ == "__main__":
     module_name = importlib.import_module(f"experiments.CHESCTF.{feature_selection_type}.best_models")
     model_class = getattr(module_name, f"best_{model_name}_{leakage_model.lower()}_{feature_selection_type.lower()}_{npoi}_chesctf")
     model, batch_size = model_class(classes, npoi)
+    
+    """ Add callback based on experiment type """
+    if experiment_type == "orig":
+        _callbacks = []
+    elif experiment_type == "es":
+        _es_callback = EarlyStopping(
+            monitor='val_loss',
+            min_delta=0.,
+            patience=5,
+            verbose=1,
+            restore_best_weights=True,
+        )
+        _callbacks = [_es_callback]
+    else:
+        raise Exception(f"Unknown experiment type {experiment_type}")
 
     """ Train model """
     history = model.fit(
@@ -100,7 +117,7 @@ if __name__ == "__main__":
         epochs=100,
         shuffle=True,
         validation_data=(chesctf_dataset.x_validation, chesctf_dataset.y_validation),
-        callbacks=[])
+        callbacks=_callbacks)
 
     """ Get DL metrics """
     accuracy = history.history["accuracy"]

@@ -121,15 +121,19 @@ We call the best models 100 times to get statistic for number of traces needed f
 mkdir -p _results/ASCADf/opoi/orig/test_best_models/
 mkdir -p _results/ASCADr/opoi/orig/test_best_models/
 mkdir -p _results/CHESCTF/opoi/orig/test_best_models/
+
 for n in {1..100}; 
 do
   for lk in ID HW;
-  do 
+  do
     for nn in mlp cnn;
-    do
-      bsub -oo "_results/ASCADf/opoi/orig/best_model_runs/${nn}_${lk}_700_${n}.log" python experiments/ASCADf/test_best_models.py ${lk} ${nn} OPOI 700 0 ${n}
-      bsub -oo "_results/ASCADr/opoi/orig/best_model_runs/${nn}_${lk}_700_${n}.log" python experiments/ASCADr/test_best_models.py ${lk} ${nn} OPOI 1400 0 ${n}
-      bsub -oo "_results/CHESCTF/opoi/orig/best_model_runs/${nn}_${lk}_700_${n}.log" python experiments/CHESCTF/test_best_models.py ${lk} ${nn} OPOI 4000 0 ${n}
+    do 
+      for et in orig es:
+      do
+        bsub -oo "_results/ASCADf/opoi/${et}/best_model_runs/${nn}_${lk}_700_${n}.log" python experiments/ASCADf/test_best_models.py ${lk} ${nn} OPOI 700 0 ${et} ${n}
+        bsub -oo "_results/ASCADr/opoi/${et}/best_model_runs/${nn}_${lk}_700_${n}.log" python experiments/ASCADr/test_best_models.py ${lk} ${nn} OPOI 1400 0 ${et} ${n}
+        bsub -oo "_results/CHESCTF/opoi/${et}/best_model_runs/${nn}_${lk}_700_${n}.log" python experiments/CHESCTF/test_best_models.py ${lk} ${nn} OPOI 4000 0 ${et} ${n}
+      done
     done
   done
 done
@@ -137,8 +141,13 @@ done
 cd _results
 find . -name "*.pdf" -type f
 find . -name "*.pdf" -type f -delete
+find . -name "*.log" -type f
+find . -name "*.log" -type f -delete
 cd ..
 python ours/results_analyze.py best_model_runs orig
+python ours/results_analyze.py best_model_runs es
+tar -zcvf _results _results.tar.gz
+
 ```
 
 
