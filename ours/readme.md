@@ -141,15 +141,13 @@ do
   done
 done
 
-cd _results
 find . -name "*.pdf" -type f
 find . -name "*.pdf" -type f -delete
 find . -name "*.log" -type f
 find . -name "*.log" -type f -delete
-cd ..
 python ours/results_analyze.py best_model_runs orig
 python ours/results_analyze.py best_model_runs es
-tar -zcvf _results _results.tar.gz
+tar -zcvf _results.tar.gz _results
 
 ```
 
