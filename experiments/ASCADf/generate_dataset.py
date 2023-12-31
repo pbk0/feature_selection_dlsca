@@ -160,7 +160,7 @@ def generate_nopoi(window):
     metadata = in_file["metadata"]
 
     ns = int(len(traces[0]) / window) * 2
-    profiling_samples = np.zeros((len(traces), ns))
+    profiling_samples = np.zeros((len(traces), ns), dtype=np.float32)
     for trace_index in tqdm(range(n_profiling + n_attack)):
         profiling_samples[trace_index] = winres(traces[trace_index], window=window)
 
