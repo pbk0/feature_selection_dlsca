@@ -136,6 +136,8 @@ do
         bsub -oo "_results/ASCADf/opoi/${et}/best_model_runs/${nn}_${lk}_700_${n}.log" python experiments/ASCADf/test_best_models.py ${lk} ${nn} OPOI 700 0 ${et} ${n}
         bsub -oo "_results/ASCADr/opoi/${et}/best_model_runs/${nn}_${lk}_700_${n}.log" python experiments/ASCADr/test_best_models.py ${lk} ${nn} OPOI 1400 0 ${et} ${n}
         bsub -oo "_results/CHESCTF/opoi/${et}/best_model_runs/${nn}_${lk}_700_${n}.log" python experiments/CHESCTF/test_best_models.py ${lk} ${nn} OPOI 4000 0 ${et} ${n}
+        # Also add experiments for NOPOI ... as it will reveal why thy work with one trace
+        # .... might be there is severe overfitting and they still work
       done
     done
   done
