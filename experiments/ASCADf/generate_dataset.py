@@ -155,7 +155,7 @@ def generate_nopoi(window):
     n_profiling = 50000
     n_attack = 10000
 
-    in_file = h5py.File(f'{raw_trace_folder_ascadf}ATMega8515_raw_traces.h5', "r")
+    in_file = h5py.File(f'{raw_trace_folder_ascadf}/ATMega8515_raw_traces.h5', "r")
     traces = in_file["traces"]
     metadata = in_file["metadata"]
 
@@ -212,20 +212,20 @@ def generate_nopoi(window):
 
 
 if __name__ == "__main__":
-    # high snr
-    generate_rpoi(leakage_model="HW")
-    # medium snr
-    generate_rpoi(gaussian_noise=3, leakage_model="HW")
-    # low snr
-    generate_rpoi(gaussian_noise=10, leakage_model="HW")
-    # high snr
-    generate_rpoi(leakage_model="ID")
-    # medium snr
-    generate_rpoi(gaussian_noise=3, leakage_model="ID")
-    # low snr
-    generate_rpoi(gaussian_noise=10, leakage_model="ID")
+    # # high snr
+    # generate_rpoi(leakage_model="HW")
+    # # medium snr
+    # generate_rpoi(gaussian_noise=3, leakage_model="HW")
+    # # low snr
+    # generate_rpoi(gaussian_noise=10, leakage_model="HW")
+    # # high snr
+    # generate_rpoi(leakage_model="ID")
+    # # medium snr
+    # generate_rpoi(gaussian_noise=3, leakage_model="ID")
+    # # low snr
+    # generate_rpoi(gaussian_noise=10, leakage_model="ID")
 
     generate_nopoi(window=10)
-    generate_nopoi(window=20)
+    # generate_nopoi(window=20)
     generate_nopoi(window=40)
-    generate_nopoi(window=80)
+    # generate_nopoi(window=80)

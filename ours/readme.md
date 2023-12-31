@@ -33,7 +33,10 @@ copy D:\dnd\Download\sca.ascad_v1_full\DnFk\file _traces\ASCAD_data.zip
 Expand-Archive -Path _traces\ASCAD_data.zip -DestinationPath _traces
 mkdir _datasets\ASCADf\opoi
 copy _traces\ASCAD_data\ASCAD_databases\ASCAD.h5 _datasets\ASCADf\opoi
+mv _traces\ASCAD_data\ASCAD_databases\ATMega8515_raw_traces.h5 _traces
+python experiments\ASCADf\generate_dataset.py
 rm -r -fo _traces\ASCAD_data
+rm ATMega8515_raw_traces.h5
 ```
 
 
