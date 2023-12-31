@@ -31,9 +31,10 @@ mkdir _results
 curl https://www.data.gouv.fr/s/resources/ascad/20180530-163000/ASCAD_data.zip --output _traces\ASCAD_data.zip
 copy D:\dnd\Download\sca.ascad_v1_full\DnFk\file _traces\ASCAD_data.zip
 Expand-Archive -Path _traces\ASCAD_data.zip -DestinationPath _traces
-mkdir _datasets\ASCADf\opoi
-copy _traces\ASCAD_data\ASCAD_databases\ASCAD.h5 _datasets\ASCADf\opoi
 mv _traces\ASCAD_data\ASCAD_databases\ATMega8515_raw_traces.h5 _traces
+mkdir _datasets\ASCADf\opoi
+mkdir _datasets\ASCADf\nopoi
+copy _traces\ASCAD_data\ASCAD_databases\ASCAD.h5 _datasets\ASCADf\opoi
 python experiments\ASCADf\generate_dataset.py
 rm -r -fo _traces\ASCAD_data
 rm ATMega8515_raw_traces.h5

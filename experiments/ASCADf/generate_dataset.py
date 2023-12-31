@@ -225,7 +225,7 @@ if __name__ == "__main__":
     # # low snr
     # generate_rpoi(gaussian_noise=10, leakage_model="ID")
 
-    generate_nopoi(window=10)
-    # generate_nopoi(window=20)
-    generate_nopoi(window=40)
-    # generate_nopoi(window=80)
+    # generate_nopoi(window=10)
+    generate_nopoi(window=20)
+    # generate_nopoi(window=40)
+    generate_nopoi(window=80)
