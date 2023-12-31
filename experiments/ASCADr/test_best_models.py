@@ -70,6 +70,9 @@ if __name__ == "__main__":
         save_folder = None
         print("ERROR: Feature selection type not found.")
         exit()
+        
+    _save_path = pathlib.Path(f"{save_folder}/{experiment_type}/best_model_runs/{model_name}_{leakage_model}_{npoi}_{run_id}.npz")
+    _save_path.parent.mkdir(parents=True, exist_ok=True)
 
     filename = f"{dataset_folder}/{dataset_name(feature_selection_type, npoi, resampling_window=window)}"
 
@@ -163,4 +166,4 @@ if __name__ == "__main__":
         npz_dict["best_epoch"] = _es_callback.best_epoch
 
     """ Save npz file with results """
-    np.savez(f"{save_folder}/{experiment_type}/best_model_runs/{model_name}_{leakage_model}_{npoi}_{run_id}.npz", npz_dict=npz_dict)
+    np.savez(_save_path, npz_dict=npz_dict)
