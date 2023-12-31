@@ -150,7 +150,7 @@ do
         do
           for dataset in ASCADf ASCADr CHESCTF;
           do
-            bsub -oo "_results/${dataset}/${poi_sel,,}/${et}/best_model_runs/${nn}_${lk}_700_${n}.log" python experiments/${dataset}/test_best_models.py ${lk} ${nn} ${poi_sel} ${et} ${n}
+            bsub -oo "_results/${dataset}/${poi_sel,,}/${et}/best_model_runs/${nn}_${lk}_${n}.log" python experiments/${dataset}/test_best_models.py ${lk} ${nn} ${poi_sel} ${et} ${n}
           done
         done
       done
@@ -159,9 +159,9 @@ do
 done
 
 find . -name "*.pdf" -type f
-find . -name "*.pdf" -type f -delete
+#find . -name "*.pdf" -type f -delete
 find . -name "*.log" -type f
-find . -name "*.log" -type f -delete
+#find . -name "*.log" -type f -delete
 python ours/results_analyze.py best_model_runs orig
 python ours/results_analyze.py best_model_runs es
 tar -zcvf _results.tar.gz _results
