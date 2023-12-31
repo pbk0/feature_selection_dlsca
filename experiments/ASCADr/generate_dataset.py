@@ -199,8 +199,8 @@ def generate_nopoi(window):
 
     ns = int(len(traces[0]) / window) * 2
 
-    profiling_samples = np.zeros((n_profiling, ns), dtype=np.int8)
-    attack_samples = np.zeros((n_attack, ns), dtype=np.int8)
+    profiling_samples = np.zeros((n_profiling, ns), dtype=np.float32)
+    attack_samples = np.zeros((n_attack, ns), dtype=np.float32)
 
     print(f"Retrieving profiling traces from index {profiling_index[:20]}")
     for i, j in tqdm(enumerate(profiling_index)):
