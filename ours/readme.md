@@ -131,12 +131,6 @@ rm -r -fo _datasets/DPAV42/nopoi
 We call the best models 100 times to get statistic for number of traces needed for attack ...
 
 ```bash
-mkdir -p _results/ASCADf/opoi/orig/best_model_runs/
-mkdir -p _results/ASCADr/opoi/orig/best_model_runs/
-mkdir -p _results/CHESCTF/opoi/orig/best_model_runs/
-mkdir -p _results/ASCADf/opoi/es/best_model_runs/
-mkdir -p _results/ASCADr/opoi/es/best_model_runs/
-mkdir -p _results/CHESCTF/opoi/es/best_model_runs/
 
 for n in {1..100}; 
 do
