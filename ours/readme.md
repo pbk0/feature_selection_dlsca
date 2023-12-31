@@ -75,7 +75,10 @@ mkdir _datasets/CHESCTF/nopoi
 mkdir _datasets/CHESCTF/opoi
 python experiments\CHESCTF\generate_dataset.py
 
-rm -r -fo _datasets/CHESCTF/nopoi
+rm _traces\PinataAcqTask2.1_10k_upload.trs
+rm _traces\PinataAcqTask2.2_10k_upload.trs
+rm _traces\PinataAcqTask2.3_10k_upload.trs
+rm _traces\PinataAcqTask2.4_10k_upload.trs
 ```
 
 
