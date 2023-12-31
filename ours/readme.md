@@ -37,7 +37,7 @@ mkdir _datasets\ASCADf\nopoi
 copy _traces\ASCAD_data\ASCAD_databases\ASCAD.h5 _datasets\ASCADf\opoi
 python experiments\ASCADf\generate_dataset.py
 rm -r -fo _traces\ASCAD_data
-rm ATMega8515_raw_traces.h5
+rm _traces\ATMega8515_raw_traces.h5
 ```
 
 
