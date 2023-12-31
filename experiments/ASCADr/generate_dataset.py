@@ -37,7 +37,7 @@ def winres(trace, window=20, overlap=0.5):
     max = len(trace)
     for i in range(0, max, step):
         trace_winres.append(np.mean(trace[i:i + window]))
-    return np.array(trace_winres)
+    return np.array(trace_winres, dtype=np.float32)
 
 
 def generate_rpoi(gaussian_noise=None, leakage_model="ID"):

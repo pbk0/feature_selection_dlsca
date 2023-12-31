@@ -38,7 +38,7 @@ def winres(trace, window=20, overlap=0.5):
     max = len(trace)
     for i in range(0, max, step):
         trace_winres.append(np.mean(trace[i:i + window]))
-    return np.array(trace_winres)
+    return np.array(trace_winres, dtype=np.float32)
 
 
 def load_trs_trace(filename, number_of_traces, number_of_samples, data_length, number_of_samples_resampled=None, window=20, desync=False):
