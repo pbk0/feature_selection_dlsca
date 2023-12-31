@@ -37,6 +37,7 @@ mkdir _datasets\ASCADf\nopoi
 copy _traces\ASCAD_data\ASCAD_databases\ASCAD.h5 _datasets\ASCADf\opoi
 python experiments\ASCADf\generate_dataset.py
 rm -r -fo _traces\ASCAD_data
+rm _traces\ASCAD_data.zip
 rm _traces\ATMega8515_raw_traces.h5
 ```
 
@@ -46,8 +47,13 @@ rm _traces\ATMega8515_raw_traces.h5
 ```pwsh
 curl https://static.data.gouv.fr/resources/ascad-atmega-8515-variable-key/20190903-083349/ascad-variable.h5 --output _traces\ascad-variable.h5
 copy D:\dnd\Download\sca.ascad_v1\DnVk_000\file _traces\ascad-variable.h5
+copy D:\dnd\Download\sca.ascad_v1_full\DnVk\file _traces\atmega8515-raw-traces.h5
 mkdir _datasets\ASCADr\opoi
+mkdir _datasets\ASCADr\nopoi
 copy _traces\ascad-variable.h5 _datasets\ASCADr\opoi
+python experiments\ASCADr\generate_dataset.py
+rm _traces\ascad-variable.h5
+rm _traces\atmega8515-raw-traces.h5
 ```
 
 
