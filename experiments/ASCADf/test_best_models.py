@@ -41,10 +41,17 @@ if __name__ == "__main__":
     leakage_model = sys.argv[1]
     model_name = sys.argv[2]
     feature_selection_type = sys.argv[3]
-    npoi = int(sys.argv[4])
-    window = int(sys.argv[5])
-    experiment_type = sys.argv[6]
-    run_id = int(sys.argv[7])
+    experiment_type = sys.argv[4]
+    run_id = int(sys.argv[5])
+    
+    if feature_selection_type == "OPOI":
+        npoi = 700
+        window = 0
+    elif feature_selection_type == "NOPOI":
+        npoi = 10000
+        window = 20
+    else:
+        raise Exception(f"Unsupported feature selection type {feature_selection_type}")
 
     if feature_selection_type == "RPOI":
         dataset_folder = dataset_folder_ascadf_rpoi

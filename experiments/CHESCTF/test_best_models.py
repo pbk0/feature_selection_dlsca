@@ -41,10 +41,35 @@ if __name__ == "__main__":
     leakage_model = sys.argv[1]
     model_name = sys.argv[2]
     feature_selection_type = sys.argv[3]
-    npoi = int(sys.argv[4])
-    window = int(sys.argv[5])
-    experiment_type = sys.argv[6]
-    run_id = int(sys.argv[7])
+    experiment_type = sys.argv[4]
+    run_id = int(sys.argv[5])
+    
+    if feature_selection_type == "OPOI":
+        npoi = 4000
+        window = 0
+    elif feature_selection_type == "NOPOI":
+        if model_name == "mlp":
+            if leakage_model == "ID":
+                npoi = 30000
+                window = 10
+            elif leakage_model == "HW":
+                npoi = 3750
+                window = 80
+            else:
+                raise Exception(f"Unsupported {leakage_model=}")
+        elif model_name == "cnn":
+            if leakage_model == "ID":
+                npoi = 7500
+                window = 40
+            elif leakage_model == "HW":
+                npoi = 7500
+                window = 40
+            else:
+                raise Exception(f"Unsupported {leakage_model=}")
+        else:
+            raise Exception(f"Unsupported {model_name=}")
+    else:
+        raise Exception(f"Unsupported feature selection type {feature_selection_type}")
 
     if feature_selection_type == "OPOI":
         dataset_folder = dataset_folder_chesctf_opoi
