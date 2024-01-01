@@ -10,23 +10,45 @@ import pandas as pd
 
 
 _REPORTED = {
-    "ASCADf": {
-        "MLP:HW": 480,
-        "MLP:ID": 104,
-        "CNN:HW": 744,
-        "CNN:ID": 87,
+    "OPOI": {
+        "ASCADf": {
+            "MLP:HW": 480,
+            "MLP:ID": 104,
+            "CNN:HW": 744,
+            "CNN:ID": 87,
+        },
+        "ASCADr": {
+            "MLP:HW": 328,
+            "MLP:ID": 129,
+            "CNN:HW": 538,
+            "CNN:ID": 78,
+        },
+        "CHESCTF": {
+            "MLP:HW": 27,
+            "MLP:ID": 1905,
+            "CNN:HW": 462,
+            "CNN:ID": ">3000",
+        },
     },
-    "ASCADr": {
-        "MLP:HW": 328,
-        "MLP:ID": 129,
-        "CNN:HW": 538,
-        "CNN:ID": 78,
-    },
-    "CHESCTF": {
-        "MLP:HW": 27,
-        "MLP:ID": 1905,
-        "CNN:HW": 462,
-        "CNN:ID": ">3000",
+    "NOPOI": {
+        "ASCADf": {
+            "MLP:HW": 7,
+            "MLP:ID": 1,
+            "CNN:HW": 7,
+            "CNN:ID": 1,
+        },
+        "ASCADr": {
+            "MLP:HW": 6,
+            "MLP:ID": 1,
+            "CNN:HW": 7,
+            "CNN:ID": 1,
+        },
+        "CHESCTF": {
+            "MLP:HW": 8,
+            "MLP:ID": 13,
+            "CNN:HW": 238,
+            "CNN:ID": ">3000",
+        },
     },
 }
 
