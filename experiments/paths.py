@@ -39,7 +39,7 @@ results_folder_ascadf_nopoi_desync = "_results/ASCADf/nopoi_desync/"
 
 results_folder_ascadr_rpoi = "_results/ASCADr/rpoi"
 results_folder_ascadr_opoi = "_results/ASCADr/opoi"
-results_folder_ascadr_nopoi = "_results/ASCADr/nppoi"
+results_folder_ascadr_nopoi = "_results/ASCADr/nopoi"
 results_folder_ascadr_nopoi_desync = "_results/ASCADr/nopoi_desync"
 
 results_folder_dpav42_rpoi = "_results/DPAV42/rpoi"
