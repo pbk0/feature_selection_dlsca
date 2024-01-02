@@ -118,7 +118,7 @@ if __name__ == "__main__":
 
     """ Create random model """
     module_name = importlib.import_module(f"experiments.CHESCTF.{feature_selection_type}.best_models")
-    model_class = getattr(module_name, f"best_{model_name}_{leakage_model.lower()}_{feature_selection_type.lower()}_{npoi}_chesctf")
+    model_class = getattr(module_name, f"best_{model_name}_{leakage_model.lower()}_{feature_selection_type.lower()}_chesctf")
     model, batch_size = model_class(classes, npoi)
     
     """ Add callback based on experiment type """

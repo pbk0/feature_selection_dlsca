@@ -156,9 +156,18 @@ find . -name "*.pdf" -type f
 #find . -name "*.pdf" -type f -delete
 find . -name "*.log" -type f
 #find . -name "*.log" -type f -delete
-python ours/results_analyze.py best_model_runs orig
-python ours/results_analyze.py best_model_runs es
 tar -zcvf _results.tar.gz _results
+
+for dataset in ASCADf ASCADr CHESCTF;
+do
+  for fs in opoi nopoi;
+  do 
+    python ours/results_analyze.py best_model_runs ${dataset} ${fs}
+  done
+done
+
+
+python ours/results_analyze.py best_model_runs es
 
 ```
 

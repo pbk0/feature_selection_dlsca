@@ -91,7 +91,7 @@ if __name__ == "__main__":
 
     """ Create random model """
     module_name = importlib.import_module(f"experiments.DPAV42.{feature_selection_type}.best_models")
-    model_class = getattr(module_name, f"best_{model_name}_{leakage_model.lower()}_{feature_selection_type.lower()}_{npoi}_dpav42")
+    model_class = getattr(module_name, f"best_{model_name}_{leakage_model.lower()}_{feature_selection_type.lower()}_dpav42")
     model, batch_size = model_class(classes, npoi)
     
     """ Add callback based on experiment type """

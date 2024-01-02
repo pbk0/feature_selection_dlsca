@@ -2,6 +2,7 @@ import subprocess
 import sys
 import pathlib
 import numpy as np
+import typing as t
 
 from matplotlib.backends.backend_pdf import PdfPages
 import seaborn as sns
@@ -276,6 +277,67 @@ def test_runs_for_dataset_rank(_dataset: str, _exp_type: str, _mode: str, ) -> p
     return _catplot.get_figure()
 
 
+def violin_plot_for_rank(data: t.Dict[str, t.List[int]], fail_when_above: int = 3000, display_until: int = 1000) -> plt.Figure:
+    ...
+
+
+def best_model_runs_report(dataset: str, feature_selection_type: str):
+    
+    # validation
+    if dataset not in ["ASCADf", "ASCADr", "CHESCTF"]:
+        raise ValueError(f"Unrecognized value {dataset=}")
+    if feature_selection_type not in ["opoi", "nopoi"]:
+        raise ValueError(f"Unrecognized value {feature_selection_type=}")
+    
+    # fetch results from disk
+    for _exp_type in ["orig", "es"]:
+        for _npz in pathlib.Path(f"_results/{dataset}/{feature_selection_type}/{_exp_type}/best_model_runs").glob("*"):
+            if not _npz.name.endswith(".npz"):
+                continue
+            _tokens = _npz.name.split("_")
+            _model_type = f"{_tokens[0].upper()}:{_tokens[1]}"
+            _data = np.load(_npz, allow_pickle=True)["npz_dict"][()]
+    
+    
+    # _reported = _REPORTED[_dataset]
+    # _results = {
+    #     "MLP:ID": {"nt_attack": [], "failed": 0, "total": 0},
+    #     "MLP:HW": {"nt_attack": [], "failed": 0, "total": 0},
+    #     "CNN:ID": {"nt_attack": [], "failed": 0, "total": 0},
+    #     "CNN:HW": {"nt_attack": [], "failed": 0, "total": 0},
+    # }
+
+    # for _npz in pathlib.Path(f"_results/{_dataset}/opoi/{_exp_type}/{_mode}").glob("*"):
+    #     if not _npz.name.endswith(".npz"):
+    #         continue
+    #     _tokens = _npz.name.split("_")
+    #     if _model_type != f"{_tokens[0].upper()}:{_tokens[1]}":
+    #         continue
+    #     _data = np.load(_npz, allow_pickle=True)["npz_dict"][()]
+    #     _results["nt_attack"].append(_data["nt_attack"])
+    #     _results["train_loss"].append(_data["loss"])
+    #     _results["val_loss"].append(_data["val_loss"])
+    #     _results["train_acc"].append(_data["accuracy"])
+    #     _results["val_acc"].append(_data["val_accuracy"])
+    #     if _data["nt_attack"] >= 3000:
+    #         _results["failed"] += 1
+    #     _results["total"] += 1
+    #     if _exp_type == "es":
+    #         _results["best_epoch"].append(_data["best_epoch"])
+    
+    # for _npz in pathlib.Path(f"_results/{dataset}/{feature_selection_type}/{_exp_type}/{_mode}").glob("*"):
+    #     if not _npz.name.endswith(".npz"):
+    #         continue
+    #     _tokens = _npz.name.split("_")
+    #     _key = f"{_tokens[0].upper()}:{_tokens[1]}"
+    #     _data = np.load(_npz, allow_pickle=True)["npz_dict"][()]
+    #     _nt_attack = _data["nt_attack"]
+    #     _results[_key]["nt_attack"].append(_nt_attack)
+    #     if _nt_attack >= 3000:
+    #         _results[_key]["failed"] += 1
+    #     _results[_key]["total"] += 1
+
+
 def main():
 
     _mode = sys.argv[1]
@@ -285,7 +347,9 @@ def main():
     elif _mode in [
         "best_model_runs",
     ]:
-        test_runs(_exp_type=sys.argv[2], _mode=_mode, )
+        _dataset = sys.argv[2]
+        _feature_selection_type = sys.argv[3]
+        best_model_runs_report(_dataset, _feature_selection_type)
     else:
         raise Exception(f"Unsupported {_mode=}")
     
