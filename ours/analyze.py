@@ -53,6 +53,17 @@ _REPORTED = {
     },
 }
 
+
+class ResultStruct(t.NamedTuple):
+    experiment_id: int
+    ntge_zero: int
+    train_loss: t.List[float]
+    val_loss: t.List[float]
+    train_acc: t.List[float]
+    val_acc: t.List[float]
+    best_epoch: int = None
+    
+
 def print_best_hp(_path: str):
     _nt_attack = np.inf
     _best_results = None
@@ -277,65 +288,148 @@ def test_runs_for_dataset_rank(_dataset: str, _exp_type: str, _mode: str, ) -> p
     return _catplot.get_figure()
 
 
-def violin_plot_for_rank(data: t.Dict[str, t.List[int]], fail_when_above: int = 3000, display_until: int = 1000) -> plt.Figure:
-    ...
+def violin_plot_for_rank(
+    title: str,
+    data: t.Dict[str, t.List[ResultStruct]],
+    reported: t.Optional[t.Dict[str, int]],
+    fail_when_above: int = 3000,
+    display_until: int = 1000,
+) -> plt.Figure:
+    
+    # make dataframe
+    _df = pd.DataFrame()
+    for _k, _v in data.items():
+        _eids = [_.experiment_id for _ in data[_k]]
+        print(title, _k, len(_eids), display_until)
+        for _ in range(1, 101):
+            if _ not in _eids:
+                print("          ", _)
+    for _k, _v in data.items():
+        print(title, _k)
+        _df[_k] = [_.ntge_zero for _ in data[_k]][:96]
+    _df[_df >= display_until] = np.inf
+    
+    # customizing runtime configuration stored
+    # in matplotlib.rcParams
+    # plt.rcParams["figure.figsize"] = [7.00, 3.50]
+    plt.rcParams["figure.autolayout"] = True
+    
+    # violin plot
+    _catplot = sns.swarmplot(
+        data=_df,
+        alpha=0.5, s=3,
+    )
+    _catplot.set(title=title)
+    _fontsize = 8
+    _offset = _fontsize * 4
+    _annotation_y = 1000
+    _catplot.set(ylim=(0, _annotation_y + 6 * _offset))
+    # for ax in _catplot.fig.axes:
+    #     ax.set_yscale('log')
+    
+    # loop for all plots
+    for _k in data.keys():
+        
+        # get fail percentage
+        _failed = 0
+        _total = 0
+        _ntge_zero_all = []
+        for _ in data[_k]:
+            _ntge_zero_all.append(_.ntge_zero)
+            _total += 1
+            if _.ntge_zero >= fail_when_above:
+                _failed += 1
+        _failed_percent = (_failed / _total) * 100
+        
+        # plot
+        _color = "red" if _failed > 0 else "blue"
+        _median = np.median(_ntge_zero_all)
+        if _median >= fail_when_above:
+            _median = f">{fail_when_above}"
+        _min = min(_ntge_zero_all)
+        if _min >= fail_when_above:
+            _min = f">{fail_when_above}"
+        _msgs = []
+        if bool(reported):
+            _msgs.append(f"[reported: {reported[_k]}]")
+        _msgs += [
+            f"min: {_min}",
+            f"median: {_median}",
+            f"max: {'>3000' if _failed else max(_ntge_zero_all)}",
+            f"failed: {_failed_percent:.2f}%",
+        ]
+        for _i, _msg in enumerate(_msgs):
+            _catplot.text(
+                _k, _annotation_y + (_i + 1) * _offset, _msg,
+                fontsize=_fontsize,  # Size
+                fontstyle="oblique",  # Style
+                color=_color,  # Color
+                ha="center",  # Horizontal alignment
+                va="center",  # Vertical alignment
+            )
+    
+    # return
+    return _catplot.get_figure()
 
 
-def best_model_runs_report(dataset: str, feature_selection_type: str):
+def best_model_runs_report(
+    dataset: str, feature_selection_type: str,
+    fail_when_above: int = 3000, display_until: int = 1000,
+):
     
     # validation
     if dataset not in ["ASCADf", "ASCADr", "CHESCTF"]:
         raise ValueError(f"Unrecognized value {dataset=}")
-    if feature_selection_type not in ["opoi", "nopoi"]:
+    if feature_selection_type not in ["OPOI", "NOPOI"]:
         raise ValueError(f"Unrecognized value {feature_selection_type=}")
     
     # fetch results from disk
+    _results = {}
     for _exp_type in ["orig", "es"]:
+        _results[_exp_type] = dict()  # type: t.Dict[str, t.List[ResultStruct]]
         for _npz in pathlib.Path(f"_results/{dataset}/{feature_selection_type}/{_exp_type}/best_model_runs").glob("*"):
             if not _npz.name.endswith(".npz"):
                 continue
             _tokens = _npz.name.split("_")
             _model_type = f"{_tokens[0].upper()}:{_tokens[1]}"
+            if _model_type not in _results[_exp_type].keys():
+                _results[_exp_type][_model_type] = []
             _data = np.load(_npz, allow_pickle=True)["npz_dict"][()]
+            _results[_exp_type][_model_type].append(
+                ResultStruct(
+                    experiment_id=int(_npz.name.split("_")[-1].split(".")[0]),
+                    ntge_zero=_data["nt_attack"],
+                    train_loss=_data["loss"],
+                    val_loss=_data["val_loss"],
+                    train_acc=_data["accuracy"],
+                    val_acc=_data["val_accuracy"],
+                    best_epoch=_data["best_epoch"] if _exp_type == "es" else None,
+                )
+            )
     
+    # ...
+    # PdfPages is a wrapper around pdf
+    # file so there is no clash and create
+    # files with no error.
+    _pdf_file = pathlib.Path(__file__).parent / "analyze" / "best_model_runs" / f"{dataset}_{feature_selection_type}.pdf"
+    _pdf_file.parent.mkdir(parents=True, exist_ok=True)
+    _pdf_file.unlink(missing_ok=True)
     
-    # _reported = _REPORTED[_dataset]
-    # _results = {
-    #     "MLP:ID": {"nt_attack": [], "failed": 0, "total": 0},
-    #     "MLP:HW": {"nt_attack": [], "failed": 0, "total": 0},
-    #     "CNN:ID": {"nt_attack": [], "failed": 0, "total": 0},
-    #     "CNN:HW": {"nt_attack": [], "failed": 0, "total": 0},
-    # }
-
-    # for _npz in pathlib.Path(f"_results/{_dataset}/opoi/{_exp_type}/{_mode}").glob("*"):
-    #     if not _npz.name.endswith(".npz"):
-    #         continue
-    #     _tokens = _npz.name.split("_")
-    #     if _model_type != f"{_tokens[0].upper()}:{_tokens[1]}":
-    #         continue
-    #     _data = np.load(_npz, allow_pickle=True)["npz_dict"][()]
-    #     _results["nt_attack"].append(_data["nt_attack"])
-    #     _results["train_loss"].append(_data["loss"])
-    #     _results["val_loss"].append(_data["val_loss"])
-    #     _results["train_acc"].append(_data["accuracy"])
-    #     _results["val_acc"].append(_data["val_accuracy"])
-    #     if _data["nt_attack"] >= 3000:
-    #         _results["failed"] += 1
-    #     _results["total"] += 1
-    #     if _exp_type == "es":
-    #         _results["best_epoch"].append(_data["best_epoch"])
+    # plt.rcParams['text.usetex'] = True
     
-    # for _npz in pathlib.Path(f"_results/{dataset}/{feature_selection_type}/{_exp_type}/{_mode}").glob("*"):
-    #     if not _npz.name.endswith(".npz"):
-    #         continue
-    #     _tokens = _npz.name.split("_")
-    #     _key = f"{_tokens[0].upper()}:{_tokens[1]}"
-    #     _data = np.load(_npz, allow_pickle=True)["npz_dict"][()]
-    #     _nt_attack = _data["nt_attack"]
-    #     _results[_key]["nt_attack"].append(_nt_attack)
-    #     if _nt_attack >= 3000:
-    #         _results[_key]["failed"] += 1
-    #     _results[_key]["total"] += 1
+    with PdfPages(_pdf_file) as _pdf:
+        
+        for _exp_type in ["orig", "es"]:
+            
+            _fig = violin_plot_for_rank(
+                title=f"{dataset} | {feature_selection_type} ({_exp_type})",
+                reported=_REPORTED[feature_selection_type][dataset],
+                data=_results[_exp_type], fail_when_above=fail_when_above, display_until=display_until,
+            )
+            _pdf.savefig(figure=_fig, dpi=300)
+            _fig.clear()
+        
+        
 
 
 def main():
