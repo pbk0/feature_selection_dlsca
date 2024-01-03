@@ -1,6 +1,6 @@
 
 
-Note that results are provided in `feature_selection_dlsca\_results.tar.gz`. Just extract it using `tar -zxvf _results.tar.gz`
+Note that results are provided in `feature_selection_dlsca\_results.zip`. Just extract it using `unzip _results.zip`
 
 In case you want to reproduce results follow the instructions below to generate the results in `feature_selection_dlsca\_results` directory.
 
@@ -8,7 +8,7 @@ In case you want to reproduce results follow the instructions below to generate 
 
 ```bash
 # dnd
-git clone https://github.com/pbk0/feature_selection_dlsca
+# git clone https://github.com/<anonymous>/feature_selection_dlsca
 cd feature_selection_dlsca/
 ```
 
@@ -29,7 +29,7 @@ mkdir _results
 
 ```pwsh
 curl https://www.data.gouv.fr/s/resources/ascad/20180530-163000/ASCAD_data.zip --output _traces\ASCAD_data.zip
-copy D:\dnd\Download\sca.ascad_v1_full\DnFk\file _traces\ASCAD_data.zip
+#copy D:\dnd\Download\sca.ascad_v1_full\DnFk\file _traces\ASCAD_data.zip
 Expand-Archive -Path _traces\ASCAD_data.zip -DestinationPath _traces
 mv _traces\ASCAD_data\ASCAD_databases\ATMega8515_raw_traces.h5 _traces
 mkdir _datasets\ASCADf\opoi
@@ -46,8 +46,9 @@ rm _traces\ATMega8515_raw_traces.h5
 
 ```pwsh
 curl https://static.data.gouv.fr/resources/ascad-atmega-8515-variable-key/20190903-083349/ascad-variable.h5 --output _traces\ascad-variable.h5
-copy D:\dnd\Download\sca.ascad_v1\DnVk_000\file _traces\ascad-variable.h5
-copy D:\dnd\Download\sca.ascad_v1_full\DnVk\file _traces\atmega8515-raw-traces.h5
+curl https://static.data.gouv.fr/resources/ascad-atmega-8515-variable-key/20190730-071646/atmega8515-raw-traces.h5 --output _traces\atmega8515-raw-traces.h5
+#copy D:\dnd\Download\sca.ascad_v1\DnVk_000\file _traces\ascad-variable.h5
+#copy D:\dnd\Download\sca.ascad_v1_full\DnVk\file _traces\atmega8515-raw-traces.h5
 mkdir _datasets\ASCADr\opoi
 mkdir _datasets\ASCADr\nopoi
 copy _traces\ascad-variable.h5 _datasets\ASCADr\opoi
@@ -66,10 +67,10 @@ curl https://zenodo.org/record/3733418/files/PinataAcqTask2.2_10k_upload.trs --o
 curl https://zenodo.org/record/3733418/files/PinataAcqTask2.3_10k_upload.trs --output _traces\PinataAcqTask2.3_10k_upload.trs
 curl https://zenodo.org/record/3733418/files/PinataAcqTask2.4_10k_upload.trs --output _traces\PinataAcqTask2.4_10k_upload.trs
 
-copy D:\dnd\Download\sca.reassure_masked_aes\DnA\file _traces\PinataAcqTask2.1_10k_upload.trs
-copy D:\dnd\Download\sca.reassure_masked_aes\DnB\file _traces\PinataAcqTask2.2_10k_upload.trs
-copy D:\dnd\Download\sca.reassure_masked_aes\DnC_vk\file _traces\PinataAcqTask2.3_10k_upload.trs
-copy D:\dnd\Download\sca.reassure_masked_aes\DnC_fk\file _traces\PinataAcqTask2.4_10k_upload.trs
+#copy D:\dnd\Download\sca.reassure_masked_aes\DnA\file _traces\PinataAcqTask2.1_10k_upload.trs
+#copy D:\dnd\Download\sca.reassure_masked_aes\DnB\file _traces\PinataAcqTask2.2_10k_upload.trs
+#copy D:\dnd\Download\sca.reassure_masked_aes\DnC_vk\file _traces\PinataAcqTask2.3_10k_upload.trs
+#copy D:\dnd\Download\sca.reassure_masked_aes\DnC_fk\file _traces\PinataAcqTask2.4_10k_upload.trs
 
 mkdir _datasets/CHESCTF/nopoi
 mkdir _datasets/CHESCTF/opoi
@@ -93,7 +94,7 @@ cd _traces
 
 curl https://zenodo.org/record/7885814/files/Ascad_v2_dataset_extracted.h5 --output _traces\Ascad_v2_dataset_extracted.h5
 
-copy D:\dnd\Download\sca.ascad_v2_mo\Dn\file _traces\Ascad_v2_dataset_extracted.h5
+#copy D:\dnd\Download\sca.ascad_v2_mo\Dn\file _traces\Ascad_v2_dataset_extracted.h5
 
 mkdir _datasets\ASCADV2\opoi
 python experiments\ASCADV2\generate_dataset.py
