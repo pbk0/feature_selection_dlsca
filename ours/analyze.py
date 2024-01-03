@@ -300,13 +300,12 @@ def violin_plot_for_rank(
     _df = pd.DataFrame()
     for _k, _v in data.items():
         _eids = [_.experiment_id for _ in data[_k]]
-        print(title, _k, len(_eids), display_until)
+        print(title, _k, len(_eids))
         for _ in range(1, 101):
             if _ not in _eids:
                 print("          ", _)
     for _k, _v in data.items():
-        print(title, _k)
-        _df[_k] = [_.ntge_zero for _ in data[_k]][:96]
+        _df[_k] = [_.ntge_zero for _ in data[_k]]
     _df[_df >= display_until] = np.inf
     
     # customizing runtime configuration stored
