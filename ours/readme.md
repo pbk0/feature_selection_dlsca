@@ -4,7 +4,7 @@ Note that results are provided in `feature_selection_dlsca\_results.zip`. Just e
 
 In case you want to reproduce results follow the instructions below to generate the results in `feature_selection_dlsca\_results` directory.
 
-# Clone the fork
+# Get the repo
 
 ```bash
 # dnd
