@@ -49,7 +49,7 @@ def load_trs_trace(filename, number_of_traces, number_of_samples, data_length, n
     keys = np.zeros((number_of_traces, 16), dtype=np.uint8)
 
     """ The second file contains traces shifted by 800 samples in acquisition phase """
-    # removing in favour of this issue
+    # removing in favour of this issue https://github.com/AISyLab/feature_selection_dlsca/issues/2
     # if filename == f"{raw_trace_folder_chesctf}/PinataAcqTask2.2_10k_upload.trs":
     #     sample_offset = 800
     # else:
@@ -61,6 +61,7 @@ def load_trs_trace(filename, number_of_traces, number_of_samples, data_length, n
         if number_of_samples_resampled is not None:
 
             if desync:
+                # removing abs see issue https://github.com/AISyLab/feature_selection_dlsca/issues/4
                 trace_tmp = trace[:number_of_samples]
                 trace_tmp_shifted = np.zeros(number_of_samples)
                 shift = random.randint(-50, 50)
@@ -72,6 +73,7 @@ def load_trs_trace(filename, number_of_traces, number_of_samples, data_length, n
                     trace_tmp_shifted[abs(shift):number_of_samples] = trace_tmp[0:number_of_samples - abs(shift)]
                 trace_tmp = trace_tmp_shifted
             else:
+                # removing abs see issue https://github.com/AISyLab/feature_selection_dlsca/issues/4
                 trace_tmp = trace[:number_of_samples]
 
             samples[i] = winres(trace_tmp, window=window)
